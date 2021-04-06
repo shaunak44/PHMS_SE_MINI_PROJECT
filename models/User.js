@@ -5,19 +5,28 @@ const mongoose = require("mongoose");
 const UserSchema = mongoose.Schema({
   aadhaar: {
     type: Number,
-    required: true
+    //required: true
   },
   email: {
     type: String,
-    required: true
+    //required: true
   },
   password: {
     type: String,
-    required: true
+    //required: true
   },
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+  name:{
+    type: String,
+  },
+  address:{
+    type: String,
+  },
+  phoneNumber:{
+    type: Number,
   }
 });
 

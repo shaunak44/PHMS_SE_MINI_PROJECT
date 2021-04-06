@@ -150,6 +150,61 @@ router.post(
   }
 );
 
+router.post(
+  "/createprofile",
+  [
+      check("name", "Please Enter valid name")
+      .not()
+      .isEmpty(),
+      check("address", "Please enter a valid address"),
+      check("phoneNo", "Please enter a valid phoneNo").isLength({
+          min: 10
+      })
+  ],
+  async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({
+              errors: errors.array(),
+              message: "ERRORS"
+          });
+      }
+
+      const {
+          name,
+          address,
+          phoneNo,
+          aadhaar,
+      } = req.body;
+      
+      try {
+          let user = await User.findOne({
+              aadhaar
+          });
+          if (!user) {
+              return res.status(400).json({
+                  message: "User doesn't Exists"
+              });
+          }
+
+          user.name = await name;
+          user.address = await address;
+          user.phoneNo = await phoneNo;
+
+          await user.save();
+
+          res.status(200).json({
+            message: "Data saved"
+          });
+
+          
+      } catch (err) {
+          console.log(err.message);
+          res.status(500).send("Error in Saving");
+      }
+  }
+);
+
 router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
@@ -159,5 +214,7 @@ router.get("/me", auth, async (req, res) => {
     res.send({ message: "Error in Fetching user" });
   }
 });
+
+
 
 module.exports = router;

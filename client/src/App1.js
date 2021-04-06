@@ -8,6 +8,9 @@ import {
 } from "react-router-dom";
 import SignUp from './services/signUp'
 import Login from './services/Login'
+import UserProfile from './services/UserProfile'
+import CreateUserProfile from './services/CreateUserProfile'
+
 import App from "./App";
 
 function App1() {
@@ -31,13 +34,22 @@ function App1() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/signup">
+          <Route exact path="/signup">
             <SignUp />
           </Route>
-          <Route path="/login">
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/profile">
+            <UserProfile />
+          </Route>
+          <Route exact path="/createprofile">
+            <CreateUserProfile />
+          </Route>
+          <Route exact path="/logout">
             <Home />
           </Route>
         </Switch>
@@ -51,5 +63,5 @@ export {AppWithRouter};
 export default App1;
 
 function Home() {
-  return <h2>welcome to Home Page</h2>;
+  return (<h2>welcome to Home Page</h2>);
 }

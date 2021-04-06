@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 
-const REDIRECT_PATH_LOGIN = '/signup'
+const REDIRECT_PATH_LOGIN = '/profile'
 
 export default class Login extends Component{
     constructor(props) {
@@ -76,7 +76,7 @@ export default class Login extends Component{
             <div>
                 <form onSubmit={this.onSubmit}>
                     <label for="aadhaar">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="1000000000"/><br/>
+                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
                     <label for="password">Password:</label><br/>
                     <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
                     <br/>

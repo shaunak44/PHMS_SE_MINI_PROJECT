@@ -66,7 +66,7 @@ export default class SignUp extends Component{
             <div>
                 <form onSubmit={this.onSubmit}>
                     <label for="aadhaar">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="1000000000"/><br/>
+                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
                     <label for="email">Email:</label><br/>
                     <input type="email" value={this.state.email} onChange={this.onChangeEmail}/><br/>
                     <label for="password">Password:</label><br/>
