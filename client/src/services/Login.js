@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
 
-const REDIRECT_PATH_LOGIN = '/profile'
+const REDIRECT_PATH_LOGIN = 'citizen/profile'
 
 export default class Login extends Component{
     constructor(props) {
@@ -13,7 +13,7 @@ export default class Login extends Component{
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            aadhaar: '',
+            aadhaar_id: '',
             password: '',
             redirect_flag: false
         }
@@ -22,7 +22,7 @@ export default class Login extends Component{
     }
 
     onChangeAadhaar(e){
-        this.setState({aadhaar: e.target.value})
+        this.setState({aadhaar_id: e.target.value})
     }
 
     onChangePassword(e){
@@ -33,13 +33,13 @@ export default class Login extends Component{
         e.preventDefault()
 
         const userObject = {
-            aadhaar : this.state.aadhaar,
+            aadhaar_id : this.state.aadhaar_id,
             password : this.state.password
         };
         
-        //console.log(userObject)
+        console.log(userObject)
 
-        axios.post('http://localhost:5000/user/login', userObject)
+        axios.post('http://localhost:5000/citizen/login', userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -58,7 +58,7 @@ export default class Login extends Component{
             console.log(error)
         });
 
-        this.setState({ aadhaar: '', password: '', redirect_flag: false});
+        this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
 
     }
 
@@ -75,8 +75,8 @@ export default class Login extends Component{
         return(
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
+                    <label for="aadhaar_id">Aadhaar:</label><br/>
+                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
                     <label for="password">Password:</label><br/>
                     <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
                     <br/>

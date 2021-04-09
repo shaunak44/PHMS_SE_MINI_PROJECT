@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 var cors = require('cors');
 
 // IMPORT MODELS
-require('./models/Product');
 const user = require("./routes/user"); //new addition
+const citizen = require("./routes/citizen"); //new addition
+
 
 const app = express();
 app.use(cors());
@@ -17,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/node-reac
 app.use(bodyParser.json());
 
 //IMPORT ROUTES
-require('./routes/productRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -30,6 +30,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use("/user", user);
+app.use("/citizen", citizen);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

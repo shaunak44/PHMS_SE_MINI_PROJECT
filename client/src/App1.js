@@ -8,10 +8,9 @@ import {
 } from "react-router-dom";
 import SignUp from './services/signUp'
 import Login from './services/Login'
-import UserProfile from './services/UserProfile'
-import CreateUserProfile from './services/CreateUserProfile'
+import CitizenProfile from './services/CitizenProfile'
 
-import App from "./App";
+import {CreateCitizenProfile, ViewCitizenInfo} from "./services/CreateCitizenProfile";
 
 function App1() {
   return (
@@ -43,14 +42,17 @@ function App1() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/profile">
-            <UserProfile />
+          <Route exact path="/citizen/profile">
+            <CitizenProfile />
           </Route>
-          <Route exact path="/createprofile">
-            <CreateUserProfile />
+          <Route exact path="/citizen/createprofile">
+            <CreateCitizenProfile />
           </Route>
           <Route exact path="/logout">
             <Home />
+          </Route>
+          <Route exact path="/citizen/viewprofile">
+            <ViewCitizenInfo />
           </Route>
         </Switch>
       </div>

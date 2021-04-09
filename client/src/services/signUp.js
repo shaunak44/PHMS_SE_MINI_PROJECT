@@ -11,18 +11,18 @@ export default class SignUp extends Component{
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            aadhaar: '',
-            email: '',
+            aadhaar_id: '',
+            email_id: '',
             password: ''
         }
     }
 
     onChangeAadhaar(e){
-        this.setState({aadhaar: e.target.value})
+        this.setState({aadhaar_id: e.target.value})
     }
 
     onChangeEmail(e){
-        this.setState({email: e.target.value})
+        this.setState({email_id: e.target.value})
     }
 
     onChangePassword(e){
@@ -33,14 +33,14 @@ export default class SignUp extends Component{
         e.preventDefault()
 
         const userObject = {
-            aadhaar : this.state.aadhaar,
-            email : this.state.email,
+            aadhaar_id : this.state.aadhaar_id,
+            email_id : this.state.email_id,
             password : this.state.password
         };
         
-        //console.log(userObject)
+        console.log(userObject)
 
-        axios.post('http://localhost:5000/user/signup', userObject)
+        axios.post('http://localhost:5000/citizen/signup', userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -56,7 +56,7 @@ export default class SignUp extends Component{
             console.log(error)
         });
 
-        this.setState({ aadhaar: '', email: '', password: ''});
+        this.setState({ aadhaar_id: '', email_id: '', password: ''});
 
     }
 
@@ -65,10 +65,10 @@ export default class SignUp extends Component{
         return(
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-                    <label for="email">Email:</label><br/>
-                    <input type="email" value={this.state.email} onChange={this.onChangeEmail}/><br/>
+                    <label for="aadhaar_id">Aadhaar:</label><br/>
+                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
+                    <label for="email_id">Email:</label><br/>
+                    <input type="email" value={this.state.email_id} onChange={this.onChangeEmail}/><br/>
                     <label for="password">Password:</label><br/>
                     <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
                     <br/>
