@@ -7,6 +7,12 @@ var cors = require('cors');
 // IMPORT MODELS
 const user = require("./routes/user"); //new addition
 const citizen = require("./routes/citizen"); //new addition
+const hospital = require("./routes/hospital"); //new addition
+const pharmacy = require("./routes/pharmacy"); //new addition
+const operator = require("./routes/operator"); //new addition
+
+
+
 
 
 const app = express();
@@ -31,6 +37,11 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use("/user", user);
 app.use("/citizen", citizen);
+app.use("/hospital", hospital);
+app.use("/pharmacy", pharmacy);
+app.use("/operator", operator);
+
+
 
 
 const PORT = process.env.PORT || 5000;

@@ -53,5 +53,4 @@ const CitizenSchema = mongoose.Schema({
   },
 });
 
-// export model user with UserSchema
 module.exports = mongoose.model("citizen", CitizenSchema);
