@@ -10,6 +10,10 @@ const citizen = require("./routes/citizen"); //new addition
 const hospital = require("./routes/hospital"); //new addition
 const pharmacy = require("./routes/pharmacy"); //new addition
 const operator = require("./routes/operator"); //new addition
+const stock = require("./routes/stock"); //new addition
+const doctor = require("./routes/doctor"); //new addition
+
+
 
 
 
@@ -40,7 +44,8 @@ app.use("/citizen", citizen);
 app.use("/hospital", hospital);
 app.use("/pharmacy", pharmacy);
 app.use("/operator", operator);
-
+app.use("/stock", stock);
+app.use("/doctor", doctor);
 
 
 

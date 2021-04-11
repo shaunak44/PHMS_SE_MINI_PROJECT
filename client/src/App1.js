@@ -8,13 +8,12 @@ import {
 } from "react-router-dom";
 import SignUp from './services/signUp'
 import Login from './services/Login'
+import {DoctorLogin, DoctorDashboard} from './services/LoginDoctor'
 import CitizenProfile from './services/CitizenProfile'
 import HospitalRegister from './services/RegisterHospital'
 import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
-
-
-
+import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo} from "./services/CreateCitizenProfile";
 
 function App1() {
@@ -33,6 +32,9 @@ function App1() {
               <Link to="/login">Login</Link>
             </li>
             <li>
+              <Link to="/logindoctor">Doctor Login</Link>
+            </li>
+            <li>
               <Link to="/registerhospital">Register as hospital</Link>
             </li>
             <li>
@@ -40,6 +42,9 @@ function App1() {
             </li>
             <li>
               <Link to="/registeroperator">Register as operator</Link>
+            </li>
+            <li>
+              <Link to="/registerdoctor">Register as doctor</Link>
             </li>
           </ul>
         </nav>
@@ -53,11 +58,17 @@ function App1() {
           <Route exact path="/login">
             <Login />
           </Route>
+          <Route exact path="/logindoctor">
+            <DoctorLogin />
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>
           <Route exact path="/citizen/profile">
             <CitizenProfile />
+          </Route>
+          <Route exact path="/doctor/dashboard">
+            <DoctorDashboard />
           </Route>
           <Route exact path="/citizen/createprofile">
             <CreateCitizenProfile />
@@ -76,6 +87,9 @@ function App1() {
           </Route>
           <Route exact path="/registeroperator">
             <OperatorRegister />
+          </Route>
+          <Route exact path="/registerdoctor">
+            <DoctorRegister />
           </Route>
         </Switch>
       </div>
