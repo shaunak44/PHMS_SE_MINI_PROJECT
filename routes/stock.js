@@ -2,6 +2,8 @@ const express = require("express");
 const { check, validationResult} = require("express-validator");
 const router = express.Router();
 const Stock = require("../models/Stock");
+const Pharmacy = require("../models/Pharmacy");
+
 
 router.post(
     "/addstock",
@@ -66,4 +68,20 @@ router.post(
     }
   );
   
+  router.get("/showstock", async (req, res) => {
+    try {
+      const store_id = req.header("store_id")
+      const user = await Stock.find({store_id});
+      if (!user) {
+            return res.status(400).json({
+                message: "No stocks found"
+            });
+        }
+      res.json(user);
+    } catch (e) {
+      res.send({ message: "Error in Fetching Stocks"});
+    }
+  });
+
+
   module.exports = router;

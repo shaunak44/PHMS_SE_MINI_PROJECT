@@ -9,6 +9,7 @@ import {
 import SignUp from './services/signUp'
 import Login from './services/Login'
 import {DoctorLogin, DoctorDashboard} from './services/LoginDoctor'
+import {PharmacyOperatorLogin, PharmacyOperatorDashboard} from './services/LoginPharmacyOperator'
 import CitizenProfile from './services/CitizenProfile'
 import HospitalRegister from './services/RegisterHospital'
 import PharmacyRegister from './services/RegisterPharmacy'
@@ -33,6 +34,9 @@ function App1() {
             </li>
             <li>
               <Link to="/logindoctor">Doctor Login</Link>
+            </li>
+            <li>
+              <Link to="/loginpharmacyoperator">Pharmacy operator Login</Link>
             </li>
             <li>
               <Link to="/registerhospital">Register as hospital</Link>
@@ -61,6 +65,9 @@ function App1() {
           <Route exact path="/logindoctor">
             <DoctorLogin />
           </Route>
+          <Route exact path="/loginpharmacyoperator">
+            <PharmacyOperatorLogin />
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>
@@ -69,6 +76,9 @@ function App1() {
           </Route>
           <Route exact path="/doctor/dashboard">
             <DoctorDashboard />
+          </Route>
+          <Route exact path="/pharmacyoperator/dashboard">
+            <PharmacyOperatorDashboard />
           </Route>
           <Route exact path="/citizen/createprofile">
             <CreateCitizenProfile />
