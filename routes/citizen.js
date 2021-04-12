@@ -230,6 +230,64 @@ router.post(
   }
 );
 
+router.post(
+  "/updateinfo",
+  [
+      check("aadhaar_id", "invalid aadhaar"),
+      check("last_checkup_date", "inCorrect date"),
+      check("spo2", "inCorrect spo2"),
+      check("temperature", "inCorrect temp"),
+      check("pulse_rate", "incorrect pulse rate"),
+      check("cormorbidity", "pulse rate"),
+  ],
+  async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({
+              errors: errors.array(),
+              message: "ERRORS"
+          });
+      }
+
+      const {
+          aadhaar_id,
+          last_checkup_date,
+          spo2,
+          temperature,
+          pulse_rate,
+          comorbidity,
+      } = req.body;
+      
+      try {
+          let user = await Citizen.findOne({
+              aadhaar_id
+          });
+          if (!user) {
+              return res.status(400).json({
+                  message: "User doesn't Exists"
+              });
+          }
+          user.last_checkup_date = await last_checkup_date;
+          user.spo2 = await spo2;
+          user.temperature = await temperature;
+          user.pulse_rate = await pulse_rate;
+          user.comorbidity = await comorbidity;
+          user.bmi = (user.weight/user.height)*10000;
+
+          await user.save();
+
+          res.status(200).json({
+            message: "Data saved"
+          });
+
+          
+      } catch (err) {
+          console.log(err.message);
+          res.status(500).send("Error in Saving");
+      }
+  }
+);
+
 
 
 router.get("/me", auth, async (req, res) => {

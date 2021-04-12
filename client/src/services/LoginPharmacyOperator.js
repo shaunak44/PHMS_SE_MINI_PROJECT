@@ -150,7 +150,7 @@ class PharmacyOperatorDashboard extends Component{
                 {this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
                 <Link onClick={this.onClickShowStocks}>Show stocks</Link><br></br>
                 {this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickUpdateStocks}>Update stocks</Link><br></br>
+                <Link onClick={this.onClickUpdateStocks}>Update and Delete stocks</Link><br></br>
                 {this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
             </div>
         )
@@ -288,6 +288,7 @@ class UpdateStock extends Component{
         this.onChangeExpiryDate = this.onChangeExpiryDate.bind(this)
         this.onChangeQuantity = this.onChangeQuantity.bind(this)
         this.onClickUpdate = this.onClickUpdate.bind(this)
+        this.onClickDelete = this.onClickDelete.bind(this)
         this.state = {
             stocksInfo:[],
             drug_name:'',
@@ -354,6 +355,32 @@ class UpdateStock extends Component{
         });
     }
 
+    onClickDelete(e){
+        e.preventDefault();
+        let store_id = sessionStorage.getItem('store_id')
+        console.log(store_id)
+        const userObject = {
+            store_id: store_id,
+            drug_name:this.state.drug_name,
+            expiry_date:this.state.expiry_date,
+            quantity:this.state.quantity,
+        }
+        console.log(userObject)
+        axios.post('http://localhost:5000/stock/deletestock', userObject)
+        .then((res) => {
+            console.log(res.data.message)
+
+        }).catch((error) => {
+            console.log(error)
+        });
+
+        this.setState({
+            store_id:'',
+            expiry_date:'',
+            quantity:'',
+        });
+    }
+
     render(){
         const info = []
         for (let i = 0; i < this.state.stocksInfo.length; i++) {
@@ -375,7 +402,7 @@ class UpdateStock extends Component{
                 <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
                 <br></br>
                 <Link onClick={this.onClickUpdate}>Update</Link><br></br>
-                
+                <Link onClick={this.onClickDelete}>Delete</Link><br></br>
             </div>
         )
     }

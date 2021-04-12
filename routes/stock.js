@@ -149,6 +149,64 @@ router.post(
     }
   );
 
+  router.post(
+    "/deletestock",
+    [
+        check("store_id", "Please Enter valid store_id")
+        .not()
+        .isEmpty(),
+        check("drug_name", "invalid drug_name"),
+        check("expiry_date", "invalid expiry_date"),
+        check("quantity", "invalid quantity"),
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+                message: "ERRORS"
+            });
+        }
+  
+        const {
+            store_id,
+            drug_name,
+            expiry_date,
+            quantity,
+
+        } = req.body;
+        
+        try {
+            let user = await Pharmacy.findOne({
+                store_id
+            });
+            if (!user) {
+                return res.status(400).json({
+                    message: "pharmacy doesn't Exists"
+                });
+            }
+
+            user = await Stock.deleteOne({
+                drug_name
+            });
+            if(!user){
+                return res.status(400).json({
+                    message: "No stocks found"
+                });
+            }
+  
+            res.status(200).json({
+              message: "Deleted successfully"
+            });
+  
+            
+        } catch (err) {
+            console.log(err.message);
+            res.status(500).send("Error in Saving");
+        }
+    }
+  );
+
 
 
   module.exports = router;

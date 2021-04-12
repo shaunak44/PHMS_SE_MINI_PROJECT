@@ -167,5 +167,64 @@ router.post(
       res.send({ message: "Error in Fetching user"});
     }
   });
+
+  router.post(
+    "/hospitallogin",
+    [
+        check("aadhaar_id", "Please enter a valid AADHAAR Number").isLength({
+            min:10
+        }),
+        check("password", "Please enter a valid password").isLength({
+            min: 6
+        })
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+                message: "ERRORS"
+            });
+        }
+  
+        const {
+            aadhaar_id, 
+            password,
+        } = req.body;
+        
+        try {
+            let user = await Citizen.findOne({
+                aadhaar_id
+            });
+            if (!user) {
+                return res.status(400).json({
+                    message: "register as a citizen first"
+                });
+            }
+            let user1 = await HospitalOperator.findOne({
+                aadhaar_id
+            });
+            if (!user1) {
+                return res.status(400).json({
+                    message: "Not registered as Hospital Operator"
+                });
+            }
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch)
+                return res.status(400).json({
+                    message: "Incorrect Password !"
+                });
+  
+            res.status(200).json({
+              message: "Welcome"
+            });
+  
+            
+        } catch (err) {
+            console.log(err.message);
+            res.status(500).send("Server Error");
+        }
+    }
+  );
   
   module.exports = router;
