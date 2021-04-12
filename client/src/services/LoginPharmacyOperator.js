@@ -93,22 +93,37 @@ class PharmacyOperatorDashboard extends Component{
         super(props)
         this.onClickAddStocks = this.onClickAddStocks.bind(this)
         this.onClickShowStocks = this.onClickShowStocks.bind(this)
+        this.onClickUpdateStocks = this.onClickUpdateStocks.bind(this)
         this.state = {
             operatorInfo: '',
             showAddStock: false,
             showShowStock: false,
+            showUpdateStock: false,
         }
         
     }
 
     onClickAddStocks(e){
         e.preventDefault();
-        this.setState({showAddStock:true})
+        if(!this.state.showAddStock)
+            this.setState({showAddStock:true})
+        else
+            this.setState({showAddStock: false})
     }
 
     onClickShowStocks(e){
         e.preventDefault();
-        this.setState({showShowStock:true})
+        if(!this.state.showShowStock)
+            this.setState({showShowStock:true})
+        else
+            this.setState({showShowStock:false})
+    }
+    onClickUpdateStocks(e){
+        e.preventDefault();
+        if(!this.state.showUpdateStock)
+            this.setState({showUpdateStock:true})
+        else
+            this.setState({showUpdateStock:false})
     }
 
     componentDidMount(){
@@ -135,6 +150,8 @@ class PharmacyOperatorDashboard extends Component{
                 {this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
                 <Link onClick={this.onClickShowStocks}>Show stocks</Link><br></br>
                 {this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
+                <Link onClick={this.onClickUpdateStocks}>Update stocks</Link><br></br>
+                {this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
             </div>
         )
     }
@@ -244,6 +261,7 @@ class ShowStock extends Component{
             console.log(error);
         })
     }
+
     render(){
         const info = []
         for (let i = 0; i < this.state.stocksInfo.length; i++) {
@@ -258,6 +276,106 @@ class ShowStock extends Component{
         return(
             <div>
                 {info}
+            </div>
+        )
+    }
+}
+
+class UpdateStock extends Component{
+    constructor(props) {
+        super(props)
+        this.onChangeDrugName = this.onChangeDrugName.bind(this)
+        this.onChangeExpiryDate = this.onChangeExpiryDate.bind(this)
+        this.onChangeQuantity = this.onChangeQuantity.bind(this)
+        this.onClickUpdate = this.onClickUpdate.bind(this)
+        this.state = {
+            stocksInfo:[],
+            drug_name:'',
+            expiry_date:'',
+            quantity:'',
+        }
+        
+    }
+
+    componentDidMount(){
+        let store_id = sessionStorage.getItem('store_id')
+        axios.get('http://localhost:5000/stock/showstock', {
+            headers:{
+                'store_id': store_id
+            }
+        })
+        .then(res => {
+            this.setState({ stocksInfo: res.data });
+            console.log(this.state.stocksInfo)
+            if(this.state.stocksInfo.length >= 1){
+                this.setState({drug_name:this.state.stocksInfo[0].drug_name})
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    onChangeDrugName(e){
+        this.setState({drug_name: e.target.value})
+    }
+
+    onChangeExpiryDate(e){
+        this.setState({expiry_date: e.target.value})
+    }
+
+    onChangeQuantity(e){
+        this.setState({quantity: e.target.value})
+    }
+
+    onClickUpdate(e){
+        e.preventDefault();
+        let store_id = sessionStorage.getItem('store_id')
+        console.log(store_id)
+        const userObject = {
+            store_id: store_id,
+            drug_name:this.state.drug_name,
+            expiry_date:this.state.expiry_date,
+            quantity:this.state.quantity,
+        }
+        console.log(userObject)
+        axios.post('http://localhost:5000/stock/updatestock', userObject)
+        .then((res) => {
+            console.log(res.data.message)
+
+        }).catch((error) => {
+            console.log(error)
+        });
+
+        this.setState({
+            store_id:'',
+            expiry_date:'',
+            quantity:'',
+        });
+    }
+
+    render(){
+        const info = []
+        for (let i = 0; i < this.state.stocksInfo.length; i++) {
+            info.push(
+                <option value= {this.state.stocksInfo[i].drug_name}>
+                    {this.state.stocksInfo[i].drug_name}
+                </option>
+            )
+        }
+        return(
+            <div>
+                <label for="drug_name">Select drug_name:</label><br/>
+                <select name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName}>
+                    {info}
+                </select><br/>
+                <label for="expiry_date">Expiry_date:</label><br/>
+                <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate}/><br/>
+                <label for="quantity">quantity:</label><br/>
+                <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
+                <br></br>
+                <Link onClick={this.onClickUpdate}>Update</Link><br></br>
+                
             </div>
         )
     }
