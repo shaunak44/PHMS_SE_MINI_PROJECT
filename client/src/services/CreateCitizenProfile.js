@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+ 
 class CreateCitizenProfile extends Component{
     constructor(props) {
         super(props)
@@ -204,7 +206,136 @@ class ViewCitizenInfo extends Component{
     }
 }
 
+class BookAppointment extends Component{
+    constructor(props){
+        super(props)
+        this.onSchedule = this.onSchedule.bind(this);
+        this.onChangeDoctorId = this.onChangeDoctorId.bind(this);
+        this.state = {
+            citizenInfo: [],
+            doctor_id:''
+        }
+    }
+
+    onSchedule(dateTime){
+        const userObject = {
+            doctor_id: this.state.doctor_id,
+            slot: String(dateTime),
+            aadhaar_id: this.state.citizenInfo.aadhaar_id,
+        };
+        console.log(userObject)
+        axios.post('http://localhost:5000/appointment/book', userObject)
+        .then((res) => {
+            console.log(res.data.message)
+
+        }).catch((error) => {
+            console.log(error)
+        });
+
+        this.setState({
+            doctor_id:'',
+        });
+    }
+
+    onChangeDoctorId(e){
+        this.setState({doctor_id: e.target.value})
+    }
+
+    componentDidMount() {
+        let data = sessionStorage.getItem('token');
+        console.log(data, typeof(data))
+        axios.get('http://localhost:5000/citizen/me', {
+            headers:{
+                'token': data
+            }
+        })
+            .then(res => {
+                this.setState({ citizenInfo: res.data });
+                console.log(this.state.citizenInfo)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    render(){
+        return(
+            <div>
+                <h1>
+                    Book an appointment.
+                </h1>
+                <label for="doctor_id">DoctorId:</label><br/>
+                <input type="number" value={this.state.doctor_id} onChange={this.onChangeDoctorId}/><br/>
+                <DayTimePicker timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>;
+            </div>
+        )
+    }
+}
+
+class CheckAppointment extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            citizenInfo: [],
+            appointments:[],
+        }
+    }
+
+    async componentDidMount() {
+        let data = sessionStorage.getItem('token');
+        console.log(data, typeof(data))
+        await axios.get('http://localhost:5000/citizen/me', {
+            headers:{
+                'token': data
+            }
+        })
+            .then(res => {
+                this.setState({ citizenInfo: res.data });
+                console.log(this.state.citizenInfo)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+        const userObject = {
+            aadhaar_id: this.state.citizenInfo.aadhaar_id,
+        };
+        console.log(userObject)
+        await axios.post('http://localhost:5000/appointment/getinfo', userObject)
+        .then((res) => {
+            console.log(res.data.appointments)
+            this.setState({appointments: res.data.appointments})
+
+        }).catch((error) => {
+            console.log(error)
+        });
+        
+    }
+
+    render(){
+        const info = this.state.appointments;
+        const listItems = info.map((i) => 
+            <div key={i.slot}>
+                <h3>{i.doctor_id}</h3>
+                <h3>{i.slot}</h3>
+                <h3>{i.status ? "Confirmed": "Waiting for confirmation"}</h3>
+            </div>);
+       
+        return(
+            <div>
+                <h1>
+                    Your appointments.
+                </h1>
+                {listItems}
+                
+            </div>
+        )
+    }
+}
+
 export {
     CreateCitizenProfile,
     ViewCitizenInfo,
+    BookAppointment,
+    CheckAppointment,
 }

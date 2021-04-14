@@ -289,7 +289,6 @@ router.post(
 );
 
 
-
 router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
@@ -299,7 +298,6 @@ router.get("/me", auth, async (req, res) => {
     res.send({ message: "Error in Fetching user"});
   }
 });
-
 
 
 module.exports = router;

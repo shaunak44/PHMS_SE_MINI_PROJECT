@@ -16,7 +16,7 @@ import HospitalRegister from './services/RegisterHospital'
 import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
-import {CreateCitizenProfile, ViewCitizenInfo} from "./services/CreateCitizenProfile";
+import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
 function App1() {
   return (
@@ -98,6 +98,12 @@ function App1() {
           </Route>
           <Route exact path="/citizen/viewprofile">
             <ViewCitizenInfo />
+          </Route>
+          <Route exact path="/citizen/bookappointment">
+            <BookAppointment />
+          </Route>
+          <Route exact path="/citizen/checkappointment">
+            <CheckAppointment />
           </Route>
           <Route exact path="/registerhospital">
             <HospitalRegister />

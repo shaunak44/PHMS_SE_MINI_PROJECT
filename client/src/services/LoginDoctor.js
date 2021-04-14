@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Redirect, Link,} from 'react-router-dom';
+import { selectFields } from 'express-validator/src/select-fields';
+import { compare } from 'bcryptjs';
 
 const REDIRECT_PATH_LOGIN = 'doctor/dashboard'
 
@@ -37,19 +39,14 @@ class DoctorLogin extends Component{
             password : this.state.password
         };
         
+        sessionStorage.setItem('doctor_aadhaar_id', this.state.aadhaar_id);
         console.log(userObject)
 
         axios.post('http://localhost:5000/doctor/login', userObject)
         .then((res) => {
-            console.log(res.data.token)
 
             // Save data to sessionStorage
-            sessionStorage.setItem('token', res.data.token);
-
-            // Get saved data from sessionStorage
-            let data = sessionStorage.getItem('token');
-
-            console.log(data)
+            
 
             this.setState({redirect_flag: true}) 
             
@@ -94,13 +91,18 @@ class DoctorDashboard extends Component{
     constructor(props) {
         super(props);
         this.onClickViewPatientProfile = this.onClickViewPatientProfile.bind(this);
+        this.onClickViewAppointment = this.onClickViewAppointment.bind(this);
         this.onChangeAadhaar = this.onChangeAadhaar.bind(this);
         this.state = {
             aadhaar_id:'',
             showData: false,
+            doctor_id:'',
+            showAppointment: false
         }
         this.state = {
-            usersCollection:''
+            usersCollection:'',
+            doctorCollection:'',
+            appointmentCollection: '',
         }
     }
     onClickViewPatientProfile(e) {
@@ -120,6 +122,40 @@ class DoctorDashboard extends Component{
             console.log(error);
         })
     }
+
+    async onClickViewAppointment(e) {
+        e.preventDefault();
+        let doctor_aadhaar_id = sessionStorage.getItem('doctor_aadhaar_id')
+        console.log(doctor_aadhaar_id);
+        await axios.get('http://localhost:5000/doctor/doctorInfo', {
+            headers:{
+                'aadhaar_id': doctor_aadhaar_id,
+            }
+        })
+        .then(res => {
+            this.setState({doctorCollection: res.data})
+            this.setState({doctor_id: this.state.doctorCollection[0].doctor_id})
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+        await axios.get('http://localhost:5000/appointment/doctorappointmentinfo', {
+            headers:{
+                'doctor_id': this.state.doctor_id
+            }
+        })
+        .then(res => {
+            this.setState({ appointmentCollection: res.data });
+            console.log(this.state.appointmentCollection)
+            this.setState({showAppointment:true})
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    
     onChangeAadhaar(e){
         this.setState({aadhaar_id: e.target.value})
     }   
@@ -130,6 +166,8 @@ class DoctorDashboard extends Component{
                 <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>    
                 <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
                 {this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
+                <Link onClick={this.onClickViewAppointment}>Appointment Details</Link><br></br>
+                {this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
                 <a href="/logout">Logout.</a>
             </div>
         )
@@ -157,6 +195,57 @@ function DisplayPatientData(props) {
                 <h2>
                     Patient record not found.
                 </h2>
+            </div>
+        )
+    }
+}
+
+class DisplayAppointments extends Component {
+    constructor(props) {
+        super(props);
+        this.onClickConfirm = this.onClickConfirm.bind(this);
+    }
+
+    onClickConfirm(i, e){
+        e.preventDefault()
+        console.log(i)
+        const userObject = {
+            aadhaar_id : i.aadhaar_id,
+            doctor_id : i.doctor_id,
+            slot: i.slot,
+        };
+        
+        console.log(userObject)
+
+        axios.post('http://localhost:5000/appointment/confirmstatus', userObject)
+        .then((res) => {
+
+            console.log(res.data);
+            
+        
+        }).catch((error) => {
+            console.log(error)
+        });
+
+    }
+
+    render(){
+        if(this.props.user.length == 0){
+            return(
+                <div>
+                    No appointements pending or scheduled.
+                </div>
+            )
+        }
+        const listItems = this.props.user.map((i) => 
+            <div key={i.slot}>
+                <h3>{i.aadhaar_id}</h3>
+                <h3>{i.slot}</h3>
+                <h3>{i.status ? "Confirmed": <button onClick={(e) => this.onClickConfirm(i, e)}>Confirm appointment </button>}</h3>
+            </div>);
+        return(
+            <div>
+                {listItems}
             </div>
         )
     }

@@ -12,8 +12,7 @@ const pharmacy = require("./routes/pharmacy"); //new addition
 const operator = require("./routes/operator"); //new addition
 const stock = require("./routes/stock"); //new addition
 const doctor = require("./routes/doctor"); //new addition
-
-
+const appointment = require("./routes/appointment"); //new addition
 
 
 
@@ -46,6 +45,7 @@ app.use("/pharmacy", pharmacy);
 app.use("/operator", operator);
 app.use("/stock", stock);
 app.use("/doctor", doctor);
+app.use("/appointment", appointment);
 
 
 

@@ -35,6 +35,8 @@ export default class CitizenProfile extends Component{
                 </h1>
                 <a href="/citizen/createprofile">Create your profile.</a><br></br>
                 <a href="/citizen/viewprofile">View your profile.</a><br></br>
+                <a href="/citizen/bookappointment">Book an appointment.</a><br></br>
+                <a href="/citizen/checkappointment">Check appointments.</a><br></br>
                 <a href="/logout">Logout.</a>
             </div> 
         )

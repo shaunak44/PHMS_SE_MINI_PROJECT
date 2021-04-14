@@ -149,5 +149,20 @@ router.post(
     }
   });
 
+  router.get("/doctorInfo", async (req, res) => {
+    try {
+      const aadhaar_id = req.header("aadhaar_id")
+      const user = await Doctor.find({aadhaar_id});
+      if (!user) {
+            return res.status(400).json({
+                message: "Doctor not Found"
+            });
+        }
+      res.json(user);
+    } catch (e) {
+      res.send({ message: "Error in Fetching user"});
+    }
+  });
+
   
   module.exports = router;
