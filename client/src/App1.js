@@ -6,6 +6,16 @@ import {
   Link,
   withRouter
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Navbar,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+  NavDropdown,
+} from 'react-bootstrap';
+import Chatbot from './services/Chatbot'
 import SignUp from './services/signUp'
 import Login from './services/Login'
 import {DoctorLogin, DoctorDashboard} from './services/LoginDoctor'
@@ -22,40 +32,34 @@ function App1() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/logindoctor">Doctor Login</Link>
-            </li>
-            <li>
-              <Link to="/loginpharmacyoperator">Pharmacy operator Login</Link>
-            </li>
-            <li>
-              <Link to="/loginhospitaloperator">Hospital operator Login</Link>
-            </li>
-            <li>
-              <Link to="/registerhospital">Register as hospital</Link>
-            </li>
-            <li>
-              <Link to="/registerpharmacy">Register as pharmacy</Link>
-            </li>
-            <li>
-              <Link to="/registeroperator">Register as operator</Link>
-            </li>
-            <li>
-              <Link to="/registerdoctor">Register as doctor</Link>
-            </li>
-          </ul>
-        </nav>
+     
+        <Navbar bg="dark" variant="dark" >
+          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/signup">Register</Nav.Link>
+            
+            <NavDropdown title="Login" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/login" >Citizen</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/logindoctor" >Doctor</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/loginpharmacyoperator" >Pharmacy Operator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="loginhospitaloperator">Hospital Operator</NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Register" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/registerhospital" >Hospital</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registerpharmacy" >Pharmacy</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registeroperator" >Operator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registerdoctor">Doctor</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-info">Search</Button>
+          </Form>
+        </Navbar>
+        <br />
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -76,7 +80,7 @@ function App1() {
             <HospitalOperatorLogin />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Chatbot />
           </Route>
           <Route exact path="/citizen/profile">
             <CitizenProfile />
@@ -128,5 +132,9 @@ export {AppWithRouter};
 export default App1;
 
 function Home() {
-  return (<h2>welcome to Home Page</h2>);
+
+  return (
+    <div>
+    </div>
+  );
 }

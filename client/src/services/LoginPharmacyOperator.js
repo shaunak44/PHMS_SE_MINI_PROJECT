@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Redirect, Link,} from 'react-router-dom';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const REDIRECT_PATH_LOGIN = 'pharmacyoperator/dashboard'
 
@@ -71,18 +78,39 @@ class PharmacyOperatorLogin extends Component{
             redirection_html = "";
         }
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar_id">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-                    <label for="password">Password:</label><br/>
-                    <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form>
+            <Container>
+                <Jumbotron>
+                    <h2>Login As Pharmacy Operator</h2>
+                    <Form onSubmit={this.onSubmit}>
+
+                        <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Jumbotron>
                 {redirection_html}
-                
-            </div> 
+            </Container> 
+            // <div>
+            //     <form onSubmit={this.onSubmit}>
+            //         <label for="aadhaar_id">Aadhaar:</label><br/>
+            //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
+            //         <label for="password">Password:</label><br/>
+            //         <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
+            //         <br/>
+            //         <input type="submit" value="Submit"/>
+            //     </form>
+            //     {redirection_html}
+            // </div> 
             
         )
     }

@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';  
 export default class OperatorRegister extends Component{
     constructor(props) {
         super(props)
@@ -57,21 +64,50 @@ export default class OperatorRegister extends Component{
 
     render(){
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="operator_type">operator_type:</label><br/>
-                    <select id="operator_type"  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
-                        <option value="hospital_operator">Hospital operator</option>
-                        <option value="pharmacy_operator">Pharmacy operator</option>
-                    </select><br/>
-                    <label for="aadhaar">Aadhaar Number:</label><br/>
-                    <input type="string" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId}/><br/>
-                    <label for="store_id">Store ID/ Hospital ID:</label><br/>
-                    <input type="number" value={this.state.store_id} onChange={this.onChangeStoreId} /><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form> 
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h2>Register As Operator</h2>
+                    <Form onSubmit={this.onSubmit}>
+
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Operator Type:</Form.Label>
+                        <Form.Control as="select" id="operator_type" required  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
+                            <option value="hospital_operator">Hospital operator</option>
+                            <option value="pharmacy_operator">Pharmacy operator</option>
+                        </Form.Control>
+                    </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000" />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Store ID/ Hospital ID:</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Store / Hospital Number" value={this.state.store_id} onChange={this.onChangeStoreId} />
+                        </Form.Group>                       
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </Jumbotron>
+            </Container> 
+            // <div>
+            //     <form onSubmit={this.onSubmit}>
+            //         <label for="operator_type">operator_type:</label><br/>
+            //         <select id="operator_type"  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
+            //             <option value="hospital_operator">Hospital operator</option>
+            //             <option value="pharmacy_operator">Pharmacy operator</option>
+            //         </select><br/>
+            //         <label for="aadhaar">Aadhaar Number:</label><br/>
+            //         <input type="string" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId}/><br/>
+            //         <label for="store_id">Store ID/ Hospital ID:</label><br/>
+            //         <input type="number" value={this.state.store_id} onChange={this.onChangeStoreId} /><br/>
+            //         <br/>
+            //         <input type="submit" value="Submit"/>
+            //     </form> 
+            // </div>
         )
     }
 }
