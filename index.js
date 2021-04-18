@@ -49,8 +49,8 @@ app.use("/appointment", appointment);
 
 
 
-// const PORT = process.env.PORT || 5000;
-const PORT = 9000
+const PORT = process.env.PORT || 5000;
+//const PORT = 9000
 app.listen(PORT, () => {
   console.log(`app running on port ${PORT}`)
 });

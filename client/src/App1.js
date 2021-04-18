@@ -26,6 +26,7 @@ import HospitalRegister from './services/RegisterHospital'
 import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
+import FaqPage from './services/FAQ'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
 function App1() {
@@ -52,6 +53,8 @@ function App1() {
               <NavDropdown.Item as={Link} to="/registeroperator" >Operator</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/registerdoctor">Doctor</NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
           </Nav>
 
           <Form inline>
@@ -120,6 +123,9 @@ function App1() {
           </Route>
           <Route exact path="/registerdoctor">
             <DoctorRegister />
+          </Route>
+          <Route exact path="/faq">
+            <FaqPage />
           </Route>
         </Switch>
       </div>
