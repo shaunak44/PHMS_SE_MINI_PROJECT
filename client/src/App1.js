@@ -18,6 +18,10 @@ import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Navbar} from 'react-bootstrap'
+
+
 function App1() {
   return (
     <Router>
