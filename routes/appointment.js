@@ -54,10 +54,10 @@ router.post(
             user.slot = slot;
             user.aadhaar_id = aadhaar_id;
             user.save();
-  
+
             res.status(200).json({
               message: "Data saved"
-            });
+            })
   
             
         } catch (err) {
