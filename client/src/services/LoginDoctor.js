@@ -80,16 +80,16 @@ class DoctorLogin extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Login As Doctor</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -100,7 +100,7 @@ class DoctorLogin extends Component{
                 {redirection_html}
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="aadhaar_id">Aadhaar:</label><br/>
             //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
             //         <label for="password">Password:</label><br/>
@@ -191,7 +191,7 @@ class DoctorDashboard extends Component{
         return(
             <div>
                 <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>    
+                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000"/><br/>    
                 <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
                 {this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
                 <Link onClick={this.onClickViewAppointment}>Appointment Details</Link><br></br>

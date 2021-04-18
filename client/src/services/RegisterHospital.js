@@ -90,35 +90,35 @@ export default class HospitalRegister extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Register Hospital</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
                         <Form.Group>
                             <Form.Label>Name:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Name" value={this.state.name} onChange={this.onChangeName} />
+                            <Form.Control required type="text" placeholder="Enter Hospital Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Hospital ID:</Form.Label>
-                            <Form.Control required type="number" placeholder="Hospital Number" value={this.state.hospital_id} onChange={this.onChangeHospitalId} />
+                            <Form.Control required type="number" placeholder="Hospital Number" value={this.state.hospital_id} onChange={this.onChangeHospitalId.bind(this)} />
                         </Form.Group>   
 
                         <Form.Group>
                             <Form.Label>Phone Number:</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Hospital Phone Number" value={this.state.phone_number} onChange={this.onChangePhoneNumber} />
+                            <Form.Control required type="number" placeholder="Enter Hospital Phone Number" value={this.state.phone_number} onChange={this.onChangePhoneNumber.bind(this)} />
                         </Form.Group>    
 
                         <Form.Group>
                             <Form.Label>Number Of Beds:</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Number Of Beds" value={this.state.no_of_beds} onChange={this.onChangeNoOfBeds} />
+                            <Form.Control required type="number" placeholder="Enter Number Of Beds" value={this.state.no_of_beds} onChange={this.onChangeNoOfBeds.bind(this)} />
                         </Form.Group>  
 
                         <Form.Group>
                             <Form.Label>Address:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress}  />
+                            <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}  />
                         </Form.Group>  
 
                         <Form.Group>
                             <Form.Label>Type:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Type" value={this.state.type} onChange={this.onChangeType} />
+                            <Form.Control required type="text" placeholder="Enter Hospital Type" value={this.state.type} onChange={this.onChangeType.bind(this)} />
                         </Form.Group>              
 
                         <Button variant="primary" type="submit">
@@ -128,7 +128,7 @@ export default class HospitalRegister extends Component{
                 </Jumbotron>
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="hospital_id">hospital_id:</label><br/>
             //         <input type="string" value={this.state.hospital_id} onChange={this.onChangeHospitalId}/><br/>
             //         <label for="name">Name:</label><br/>

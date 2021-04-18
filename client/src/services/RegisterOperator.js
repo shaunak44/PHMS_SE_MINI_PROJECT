@@ -67,11 +67,11 @@ export default class OperatorRegister extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Register As Operator</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Operator Type:</Form.Label>
-                        <Form.Control as="select" id="operator_type" required  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
+                        <Form.Control as="select" id="operator_type" required  value={this.state.operator_type} onChange={this.onChangeOperatorType.bind(this)}>
                             <option value="hospital_operator">Hospital operator</option>
                             <option value="pharmacy_operator">Pharmacy operator</option>
                         </Form.Control>
@@ -79,12 +79,12 @@ export default class OperatorRegister extends Component{
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Store ID/ Hospital ID:</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Store / Hospital Number" value={this.state.store_id} onChange={this.onChangeStoreId} />
+                            <Form.Control required type="number" placeholder="Enter Store / Hospital Number" value={this.state.store_id} onChange={this.onChangeStoreId.bind(this)} />
                         </Form.Group>                       
 
                         <Button variant="primary" type="submit">
@@ -94,7 +94,7 @@ export default class OperatorRegister extends Component{
                 </Jumbotron>
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="operator_type">operator_type:</label><br/>
             //         <select id="operator_type"  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
             //             <option value="hospital_operator">Hospital operator</option>

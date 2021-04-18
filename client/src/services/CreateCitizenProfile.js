@@ -136,29 +136,29 @@ class CreateCitizenProfile extends Component{
     render(){
         return(
             <div>       
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit.bind(this)}>
                     <label for="name">Name:</label><br/>
-                    <input type="name" value={this.state.name} onChange={this.onChangeName}/><br/>
+                    <input type="name" value={this.state.name} onChange={this.onChangeName.bind(this)}/><br/>
                     <label for="address">Address:</label><br/>
-                    <input type="address" value={this.state.address} onChange={this.onChangeAddress}/><br/>
+                    <input type="address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}/><br/>
                     <label for="phoneNo">Phone Number:</label><br/>
-                    <input type="phoneNo" value={this.state.phoneNumber} onChange={this.onChangePhoneNo} /><br/>
+                    <input type="phoneNo" value={this.state.phoneNumber} onChange={this.onChangePhoneNo.bind(this)} /><br/>
                     <label for="age">Age:</label><br/>
-                    <input type="number" value={this.state.age} onChange={this.onChangeAge} /><br/>
+                    <input type="number" value={this.state.age} onChange={this.onChangeAge.bind(this)} /><br/>
                     <label for="height">Height:</label><br/>
-                    <input type="mumber" value={this.state.height} onChange={this.onChangeHeight} /><br/>
+                    <input type="mumber" value={this.state.height} onChange={this.onChangeHeight.bind(this)} /><br/>
                     <label for="weight">Weight:</label><br/>
-                    <input type="number" value={this.state.weight} onChange={this.onChangeWeight} /><br/>
+                    <input type="number" value={this.state.weight} onChange={this.onChangeWeight.bind(this)} /><br/>
                     <label for="last_check_up">last_checkup_date:</label><br/>
-                    <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate} /><br/>
+                    <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate.bind(this)} /><br/>
                     <label for="Spo2">Spo2:</label><br/>
-                    <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2} /><br/>
+                    <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2.bind(this)} /><br/>
                     <label for="temperature">Temperature:</label><br/>
-                    <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature} /><br/>
+                    <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature.bind(this)} /><br/>
                     <label for="pulse_rate">pulse_rate:</label><br/>
-                    <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate} /><br/>
+                    <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate.bind(this)} /><br/>
                     <label for="comorbidity">comorbidity:</label><br/>
-                    <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity} /><br/>
+                    <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity.bind(this)} /><br/>
                     <br/>
                     <input type="submit" value="Submit"/>
                 </form> 
@@ -265,7 +265,7 @@ class BookAppointment extends Component{
                     Book an appointment.
                 </h1>
                 <label for="doctor_id">DoctorId:</label><br/>
-                <input type="number" value={this.state.doctor_id} onChange={this.onChangeDoctorId}/><br/>
+                <input type="number" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)}/><br/>
                 <DayTimePicker timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>;
             </div>
         )

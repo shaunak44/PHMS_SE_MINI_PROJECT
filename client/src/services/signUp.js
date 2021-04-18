@@ -12,10 +12,10 @@ export default class SignUp extends Component{
     constructor(props) {
         super(props)
 
-        this.onChangeAadhaar = this.onChangeAadhaar.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        // this.onChangeAadhaar = this.onChangeAadhaar.bind(this);
+        // this.onChangeEmail = this.onChangeEmail.bind(this);
+        // this.onChangePassword = this.onChangePassword.bind(this);
+        // this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             aadhaar_id: '',
@@ -25,18 +25,23 @@ export default class SignUp extends Component{
     }
 
     onChangeAadhaar(e){
+        console.log(e.target.value);
         this.setState({aadhaar_id: e.target.value})
     }
 
     onChangeEmail(e){
+        console.log(e.target.value);
         this.setState({email_id: e.target.value})
     }
 
     onChangePassword(e){
+        console.log(e.target.value);
         this.setState({password: e.target.value})
     }
 
     onSubmit(e){
+
+        console.log(e);
         e.preventDefault()
 
         const userObject = {
@@ -73,16 +78,16 @@ export default class SignUp extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Register</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control required type="email" placeholder="Enter email" />
+                            <Form.Control required type="email" placeholder="Enter email" value={this.state.email_id} onChange={this.onChangeEmail.bind(this)} />
                             <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                             </Form.Text>
@@ -90,7 +95,7 @@ export default class SignUp extends Component{
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -100,7 +105,7 @@ export default class SignUp extends Component{
                 </Jumbotron>
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="aadhaar_id">Aadhaar:</label><br/>
             //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
             //         <label for="email_id">Email:</label><br/>
