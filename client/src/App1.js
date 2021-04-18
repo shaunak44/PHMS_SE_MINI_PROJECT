@@ -27,7 +27,7 @@ import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import FaqPage from './services/FAQ'
-import {AgePie} from './services/Analysis'
+import {AgePie, BmiPie} from './services/Analysis'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
 function App1() {
@@ -57,7 +57,12 @@ function App1() {
 
             <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
 
-            <Nav.Link as={Link} to="/analysis">Analysis</Nav.Link>
+            {/* <Nav.Link as={Link} to="/analysis">Analysis</Nav.Link> */}
+            <NavDropdown title="Analysis" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/agepie" >Age</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bmipie" >BMI</NavDropdown.Item>
+            </NavDropdown>
+
           </Nav>
 
           <Form inline>
@@ -130,8 +135,11 @@ function App1() {
           <Route exact path="/faq">
             <FaqPage />
           </Route>
-          <Route exact path="/analysis">
+          <Route exact path="/agepie">
             <AgePie />
+          </Route>
+          <Route exact path="/bmipie">
+            <BmiPie />
           </Route>
         </Switch>
       </div>
