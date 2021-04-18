@@ -67,7 +67,7 @@ export default class PharmacyRegister extends Component{
             closing_time: this.state.closing_time,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/pharmacy/registerpharmacy', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/pharmacy/registerpharmacy`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

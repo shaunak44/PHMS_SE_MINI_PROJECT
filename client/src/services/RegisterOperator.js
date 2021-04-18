@@ -47,7 +47,7 @@ export default class OperatorRegister extends Component{
             store_id : this.state.store_id,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/operator/registeroperator', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/registeroperator`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

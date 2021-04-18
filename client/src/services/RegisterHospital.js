@@ -67,7 +67,7 @@ export default class HospitalRegister extends Component{
             type: this.state.type,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/hospital/registerhospital', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/hospital/registerhospital`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

@@ -44,7 +44,7 @@ class HospitalOperatorLogin extends Component{
         sessionStorage.setItem('aadhaar_id_hospital', this.state.aadhaar_id)
         console.log(userObject)
 
-        axios.post('http://localhost:5000/operator/hospitallogin', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/hospitallogin`, userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -184,7 +184,7 @@ class ViewData extends Component{
     onClickViewPatientProfile(e){
         e.preventDefault()
         console.log(this.state.aadhaar_id)
-        axios.get('http://localhost:5000/doctor/viewpatient', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/viewpatient`, {
             headers:{
                 'aadhaar_id': this.state.aadhaar_id
             }
@@ -265,7 +265,7 @@ class UpdateData extends Component{
             comorbidity:this.state.comorbidity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/citizen/updateinfo', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/updateinfo`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

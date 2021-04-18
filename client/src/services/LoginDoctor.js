@@ -49,7 +49,7 @@ class DoctorLogin extends Component{
         sessionStorage.setItem('doctor_aadhaar_id', this.state.aadhaar_id);
         console.log(userObject)
 
-        axios.post('http://localhost:5000/doctor/login', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/login`, userObject)
         .then((res) => {
 
             // Save data to sessionStorage
@@ -136,7 +136,7 @@ class DoctorDashboard extends Component{
     onClickViewPatientProfile(e) {
         e.preventDefault();
         console.log(this.state.aadhaar_id)
-        axios.get('http://localhost:5000/doctor/viewpatient', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/viewpatient`, {
             headers:{
                 'aadhaar_id': this.state.aadhaar_id
             }
@@ -155,7 +155,7 @@ class DoctorDashboard extends Component{
         e.preventDefault();
         let doctor_aadhaar_id = sessionStorage.getItem('doctor_aadhaar_id')
         console.log(doctor_aadhaar_id);
-        await axios.get('http://localhost:5000/doctor/doctorInfo', {
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/doctorInfo`, {
             headers:{
                 'aadhaar_id': doctor_aadhaar_id,
             }
@@ -168,7 +168,7 @@ class DoctorDashboard extends Component{
             console.log(error);
         })
 
-        await axios.get('http://localhost:5000/appointment/doctorappointmentinfo', {
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/doctorappointmentinfo`, {
             headers:{
                 'doctor_id': this.state.doctor_id
             }
@@ -245,7 +245,7 @@ class DisplayAppointments extends Component {
         
         console.log(userObject)
 
-        axios.post('http://localhost:5000/appointment/confirmstatus', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/confirmstatus`, userObject)
         .then((res) => {
 
             console.log(res.data);
@@ -258,7 +258,7 @@ class DisplayAppointments extends Component {
     }
 
     render(){
-        if(this.props.user.length == 0){
+        if(this.props.user.length === 0){
             return(
                 <div>
                     No appointements pending or scheduled.

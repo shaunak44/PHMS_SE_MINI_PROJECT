@@ -47,7 +47,7 @@ export default class SignUp extends Component{
         
         console.log(userObject)
 
-        axios.post('http://localhost:5000/citizen/signup', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/signup`, userObject)
         .then((res) => {
             console.log(res.data.token)
 
