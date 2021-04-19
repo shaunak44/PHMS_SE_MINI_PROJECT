@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {
-    Card,
     Container,
     Button,
-    CardDeck
+    ButtonGroup,
+    ButtonToolbar
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -37,55 +37,17 @@ export default class CitizenProfile extends Component{
     render(){
         return(
             <Container>
-                <h1>
+                <h2>
                     Welcome User With aadhaar {this.state.usersCollection.aadhaar_id}
-                </h1>
+                </h2>
                 <hr></hr>
-                <CardDeck>
-                    <Card bg='primary'text='light'style={{ width: '18rem' }}className="mb-2">
-                        <Card.Header>Create Profile</Card.Header>
-                        <Card.Body>
-                            <Card.Text>Set Name, Height, Weight, Age, etc.</Card.Text>
-                            <Button variant="light" href="/citizen/createprofile">Go</Button>
-                        </Card.Body>
-                    </Card>
-
-                    <Card bg='primary'text='light'style={{ width: '18rem' }}className="mb-2">
-                        <Card.Header>View Profile</Card.Header>
-                        <Card.Body>
-                            <Card.Text>View Your Profile</Card.Text>
-                            <Button variant="light" href="/citizen/viewprofile">Go</Button>
-                        </Card.Body>
-                    </Card>
-
-                    <Card bg='primary'text='light'style={{ width: '18rem' }}className="mb-2">
-                        <Card.Header>Book appointment.</Card.Header>
-                        <Card.Body>
-                            <Card.Text>Book An Appointment, Select Date, Doctor.</Card.Text>
-                            <Button variant="light" href="/citizen/bookappointment">Go</Button>
-                        </Card.Body>
-                    </Card>
-
-                    <Card bg='primary'text='light'style={{ width: '18rem' }}className="mb-2">
-                        <Card.Header>Check appointments.</Card.Header>
-                        <Card.Body>
-                            <Card.Text>Check Your Appointments.</Card.Text>
-                            <Button variant="light" href="/citizen/checkappointment">Go</Button>
-                        </Card.Body>
-                    </Card>
-
-                    <Card bg='primary'text='light'style={{ width: '18rem' }}className="mb-2">
-                        <Card.Header>Logout</Card.Header>
-                        <Card.Body>
-                            <Button variant="light" href="/logout">Go</Button>
-                        </Card.Body>
-                    </Card>
-                </CardDeck>
-                {/* <a href="/citizen/createprofile">Create your profile.</a><br></br>
-                <a href="/citizen/viewprofile">View your profile.</a><br></br>
-                <a href="/citizen/bookappointment">Book an appointment.</a><br></br>
-                <a href="/citizen/checkappointment">Check appointments.</a><br></br>
-                <a href="/logout">Logout.</a> */}
+                <Container>
+                    <Button block href="/citizen/createprofile" size='lg' variant='primary'>Create Profile</Button>{'  '}
+                    <Button block href="/citizen/viewprofile" size='lg' variant='secondary'>View Profile</Button>{'  '}
+                    <Button block href="/citizen/bookappointment" size='lg' variant='success'>Book Appointment</Button>{'  '}
+                    <Button block href="/citizen/checkappointment" size='lg' variant='info'>Check Appointments</Button>{'  '}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Container>
             </Container> 
         )
     }

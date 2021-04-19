@@ -104,18 +104,6 @@ export default class SignUp extends Component{
                     </Form>
                 </Jumbotron>
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="aadhaar_id">Aadhaar:</label><br/>
-            //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-            //         <label for="email_id">Email:</label><br/>
-            //         <input type="email" value={this.state.email_id} onChange={this.onChangeEmail}/><br/>
-            //         <label for="password">Password:</label><br/>
-            //         <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form> 
-            // </div> 
         )
     }
 
