@@ -214,10 +214,14 @@ function DisplayPatientData(props) {
         console.log(props);
         
         return (
-            <div>
-                <h2>Aadhaar: {props.user[0].aadhaar_id}</h2>
-                <h2>Name: {props.user[0].name}</h2>
-            </div>
+            <Card>
+                <Card.Body>
+                    <blockquote className="blockquote mb-0">
+                        <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
+                        <h4>Name: {props.user[0].name}</h4>
+                    </blockquote>
+                </Card.Body>
+            </Card>
         );
     }
     else{
