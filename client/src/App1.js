@@ -27,7 +27,7 @@ import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import FaqPage from './services/FAQ'
-import {AgePie, BmiPie} from './services/Analysis'
+import {AgePie, BmiPie, BedsBar, CheckupPie} from './services/Analysis'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
 function App1() {
@@ -61,6 +61,8 @@ function App1() {
             <NavDropdown title="Analysis" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/agepie" >Age</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/bmipie" >BMI</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bedsbar" >Beds</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/checkuppie" >Last Checkup</NavDropdown.Item>
             </NavDropdown>
 
           </Nav>
@@ -140,6 +142,12 @@ function App1() {
           </Route>
           <Route exact path="/bmipie">
             <BmiPie />
+          </Route>
+          <Route exact path="/bedsbar">
+            <BedsBar />
+          </Route>
+          <Route exact path="/checkuppie">
+            <CheckupPie />
           </Route>
         </Switch>
       </div>

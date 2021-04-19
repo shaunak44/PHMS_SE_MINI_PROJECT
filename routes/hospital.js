@@ -76,4 +76,18 @@ router.post(
     }
   );
   
-  module.exports = router;
+router.get("/viewstats", async (req, res) => {
+    try {
+        const hosp = await Hospital.find();
+        if (!hosp) {
+            return res.status(400).json({
+                message: "Hospital not Found"
+            });
+        }
+        res.json(hosp);
+    } catch (e) {
+        res.send({ message: "Error in Fetching Hosp"});
+    }
+});
+
+module.exports = router;
