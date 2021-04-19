@@ -52,7 +52,7 @@ export default class DoctorRegister extends Component{
             specialization: this.state.specialization,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/doctor/registerdoctor', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/registerdoctor`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

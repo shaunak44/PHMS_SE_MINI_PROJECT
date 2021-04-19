@@ -12,7 +12,7 @@ export default class Chatbot extends Component{
             "yes": "Okay ! Have A Great Day !!"
         }
         console.log(event);
-        if(event.keyCode == 13){
+        if(event.keyCode === 13){
             
             var user = document.getElementById("userbox").value
             document.getElementById("userbox").value = ""
@@ -29,7 +29,7 @@ export default class Chatbot extends Component{
     render() {
         return (
             <div>
-                <h2>CHATBOT</h2>
+                <h2>CHATBOT {process.env.REACT_APP_SERVER_PORT}</h2>
                 <h4 id="chatLog"></h4>
                 <div style={{ textAlign: "" }}>
                     <input id="userbox" type="text" onKeyDown={this.talk}></input>

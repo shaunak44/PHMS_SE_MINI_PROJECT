@@ -40,7 +40,7 @@ class CreateCitizenProfile extends Component{
     componentDidMount() {
         let data = sessionStorage.getItem('token');
         console.log(data, typeof(data))
-        axios.get('http://localhost:5000/citizen/me', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/me`, {
             headers:{
                 'token': data
             }
@@ -109,7 +109,7 @@ class CreateCitizenProfile extends Component{
         
         console.log(userObject)
 
-        axios.post('http://localhost:5000/citizen/createprofile', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/createprofile`, userObject)
         .then((res) => {
             console.log(res.data.message)
 
@@ -179,7 +179,7 @@ class ViewCitizenInfo extends Component{
     componentDidMount() {
         let data = sessionStorage.getItem('token');
         console.log(data, typeof(data))
-        axios.get('http://localhost:5000/citizen/me', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/me`, {
             headers:{
                 'token': data
             }
@@ -224,7 +224,7 @@ class BookAppointment extends Component{
             aadhaar_id: this.state.citizenInfo.aadhaar_id,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/appointment/book', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/book`, userObject)
         .then((res) => {
             console.log(res.data.message)
 
@@ -244,7 +244,7 @@ class BookAppointment extends Component{
     componentDidMount() {
         let data = sessionStorage.getItem('token');
         console.log(data, typeof(data))
-        axios.get('http://localhost:5000/citizen/me', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/me`, {
             headers:{
                 'token': data
             }
@@ -284,7 +284,7 @@ class CheckAppointment extends Component{
     async componentDidMount() {
         let data = sessionStorage.getItem('token');
         console.log(data, typeof(data))
-        await axios.get('http://localhost:5000/citizen/me', {
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/me`, {
             headers:{
                 'token': data
             }
@@ -301,7 +301,7 @@ class CheckAppointment extends Component{
             aadhaar_id: this.state.citizenInfo.aadhaar_id,
         };
         console.log(userObject)
-        await axios.post('http://localhost:5000/appointment/getinfo', userObject)
+        await axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/getinfo`, userObject)
         .then((res) => {
             console.log(res.data.appointments)
             this.setState({appointments: res.data.appointments})

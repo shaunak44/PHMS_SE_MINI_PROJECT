@@ -44,7 +44,7 @@ class PharmacyOperatorLogin extends Component{
         sessionStorage.setItem('aadhaar_id_pharmacy', this.state.aadhaar_id)
         console.log(userObject)
 
-        axios.post('http://localhost:5000/operator/pharmacylogin', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/pharmacylogin`, userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -156,7 +156,7 @@ class PharmacyOperatorDashboard extends Component{
 
     componentDidMount(){
         let aadhaar_id = sessionStorage.getItem('aadhaar_id_pharmacy')
-        axios.get('http://localhost:5000/operator/pharmacyme', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/pharmacyme`, {
             headers:{
                 'aadhaar_id': aadhaar_id
             }
@@ -231,7 +231,7 @@ class AddStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/addstock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/addstock`, userObject)
         .then((res) => {
             console.log(res.data.message)
 
@@ -276,7 +276,7 @@ class ShowStock extends Component{
 
     componentDidMount(){
         let store_id = sessionStorage.getItem('store_id')
-        axios.get('http://localhost:5000/stock/showstock', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/showstock`, {
             headers:{
                 'store_id': store_id
             }
@@ -328,7 +328,7 @@ class UpdateStock extends Component{
 
     componentDidMount(){
         let store_id = sessionStorage.getItem('store_id')
-        axios.get('http://localhost:5000/stock/showstock', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/showstock`, {
             headers:{
                 'store_id': store_id
             }
@@ -368,7 +368,7 @@ class UpdateStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/updatestock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/updatestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
 
@@ -394,7 +394,7 @@ class UpdateStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/deletestock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/deletestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
 

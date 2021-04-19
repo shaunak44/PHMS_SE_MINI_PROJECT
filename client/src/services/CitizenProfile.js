@@ -13,7 +13,7 @@ export default class CitizenProfile extends Component{
     componentDidMount() {
         let data = sessionStorage.getItem('token');
         console.log(data, typeof(data))
-        axios.get('http://localhost:5000/citizen/me', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/me`, {
             headers:{
                 'token': data
             }
