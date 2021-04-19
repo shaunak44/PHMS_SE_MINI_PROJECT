@@ -8,6 +8,9 @@ import {
     Container
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const REDIRECT_PATH_LOGIN = 'citizen/profile'
 
@@ -58,11 +61,13 @@ export default class Login extends Component{
 
             console.log(data)
 
-            this.setState({redirect_flag: true}) 
+            this.setState({redirect_flag: true})
+            
             
         
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid credential')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -98,6 +103,7 @@ export default class Login extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
                 {redirection_html}

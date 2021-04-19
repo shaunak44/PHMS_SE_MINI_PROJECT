@@ -122,6 +122,8 @@ class DoctorDashboard extends Component{
             appointmentCollection: '',
         }
     }
+
+
     onClickViewPatientProfile(e) {
         e.preventDefault();
         console.log(this.state.aadhaar_id)
@@ -139,6 +141,7 @@ class DoctorDashboard extends Component{
             console.log(error);
         })
     }
+    
 
     async onClickViewAppointment(e) {
         e.preventDefault();
@@ -179,14 +182,22 @@ class DoctorDashboard extends Component{
     render(){
         return(
             <Container>
+                <Container>
+                    <Jumbotron>
+                        <h3>Doctor Dashboard</h3> <hr></hr>
+                        <Form.Group>
+                            <Form.Label>Enter Aadhaar Id of Patient</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhaar Id of Patient" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)}/>
+                        </Form.Group>
+                        <Button block onClick={this.onClickViewPatientProfile} size='lg' variant='info'>View Patient Profile</Button>{this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
+                        </Jumbotron>
+                </Container>
+                <Container>
                 <Jumbotron>
-                    <h3>Doctor Dashboard</h3> <hr></hr>
-                    {/* <label for="aadhaar_id">Aadhaar:</label><br/> */}
-                    {/* <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000"/><br/>  */}
-                    <Button block onClick={this.onClickViewPatientProfile} size='lg' variant='info'>View Patient Profile</Button>{this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
                     <Button block onClick={this.onClickViewAppointment} size='lg' variant='dark'>Appointment Details</Button>{this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
                     <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
                 </Jumbotron>
+                </Container>
             </Container>
         )
     }
@@ -260,11 +271,11 @@ class DisplayAppointments extends Component {
             )
         }
         const listItems = this.props.user.map((i) => 
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem'}}>
             <Card.Body>
                 <Card.Title>{i.slot}</Card.Title>
                 <Card.Text> {i.aadhaar_id} </Card.Text>
-                {i.status ? <Button variant='warning'>Confirmed</Button>: <Button variant="success" onClick={(e) => this.onClickConfirm(i, e).bind(this)}>Confirm Appointment </Button>}
+                {i.status ? <Button variant='warning'>Confirmed</Button>: <Button variant="success" onClick={(e) => this.onClickConfirm(i, e)}>Confirm Appointment </Button>}
             </Card.Body>
         </Card>
             );

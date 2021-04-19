@@ -30,6 +30,10 @@ import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Component } from "react";
+
 function App1() {
   return (
     <Router>
@@ -133,14 +137,19 @@ const AppWithRouter = withRouter(App1);
 export {AppWithRouter};
 export default App1;
 
-function Home() {
-
-  return (
-    <Container>
-      <Jumbotron>
-        <h2>Home Page</h2><hr></hr>
-        <Chatbot></Chatbot>
-      </Jumbotron>
-    </Container>
-  );
+class Home extends Component {
+  componentDidMount(){
+    toast.success("logged out sucessfully");
+  }
+  render(){
+    return (
+      <Container>
+        <Jumbotron>
+          <h2>Home Page</h2><hr></hr>
+          <Chatbot></Chatbot>
+        </Jumbotron>
+        <ToastContainer />
+      </Container>
+    );
+  }
 }

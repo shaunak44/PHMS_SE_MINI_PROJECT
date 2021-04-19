@@ -8,6 +8,9 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default class SignUp extends Component{
     constructor(props) {
         super(props)
@@ -63,9 +66,11 @@ export default class SignUp extends Component{
             let data = sessionStorage.getItem('token');
 
             console.log(data)
+             toast("Sucessfully signed up");
 
         }).catch((error) => {
             console.log(error)
+            toast("Invalid cred or already registered");
         });
 
         this.setState({ aadhaar_id: '', email_id: '', password: ''});
@@ -101,6 +106,7 @@ export default class SignUp extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer />
                     </Form>
                 </Jumbotron>
             </Container> 

@@ -10,6 +10,8 @@ import {
     CardDeck
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  
 class CreateCitizenProfile extends Component{
     constructor(props) {
@@ -60,6 +62,7 @@ class CreateCitizenProfile extends Component{
             })
             .catch(function (error) {
                 console.log(error);
+                toast.error('Error')
             })
     }
     onChangeName(e){
@@ -121,9 +124,11 @@ class CreateCitizenProfile extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/createprofile`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Saved sucessfully')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Error in saving')
         });
 
         this.setState({
@@ -206,6 +211,7 @@ class CreateCitizenProfile extends Component{
                             <Button variant="primary" type="submit">
                                 Submit
                             </Button>
+                            <ToastContainer/>
                     </Form>
                 </Jumbotron>
             </Container>
@@ -306,9 +312,12 @@ class BookAppointment extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/book`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Sucessfully Booked')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Not available slots')
+
         });
 
         this.setState({
@@ -348,6 +357,7 @@ class BookAppointment extends Component{
                         <Form.Control required type="number" placeholder="Enter Doctor ID" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)} />
                     </Form.Group>
                     <DayTimePicker bg='primary' timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>
+                    <ToastContainer/>
                 </Jumbotron>
             </Container>
         )
