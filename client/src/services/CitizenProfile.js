@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {
+    Container,
+    Button,
+    ButtonGroup,
+    ButtonToolbar
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class CitizenProfile extends Component{
     constructor(props) {
@@ -29,16 +36,19 @@ export default class CitizenProfile extends Component{
 
     render(){
         return(
-            <div>
-                <h1>
-                    Welcome User with aadhaar {this.state.usersCollection.aadhaar_id}
-                </h1>
-                <a href="/citizen/createprofile">Create your profile.</a><br></br>
-                <a href="/citizen/viewprofile">View your profile.</a><br></br>
-                <a href="/citizen/bookappointment">Book an appointment.</a><br></br>
-                <a href="/citizen/checkappointment">Check appointments.</a><br></br>
-                <a href="/logout">Logout.</a>
-            </div> 
+            <Container>
+                <h2>
+                    Welcome User With aadhaar {this.state.usersCollection.aadhaar_id}
+                </h2>
+                <hr></hr>
+                <Container>
+                    <Button block href="/citizen/createprofile" size='lg' variant='primary'>Create Profile</Button>{'  '}
+                    <Button block href="/citizen/viewprofile" size='lg' variant='secondary'>View Profile</Button>{'  '}
+                    <Button block href="/citizen/bookappointment" size='lg' variant='success'>Book Appointment</Button>{'  '}
+                    <Button block href="/citizen/checkappointment" size='lg' variant='info'>Check Appointments</Button>{'  '}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Container>
+            </Container> 
         )
     }
 }

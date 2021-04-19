@@ -90,35 +90,35 @@ export default class PharmacyRegister extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Register Pharmacy</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
                         <Form.Group>
                             <Form.Label>Name:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Name" value={this.state.name} onChange={this.onChangeName} />
+                            <Form.Control required type="text" placeholder="Enter Hospital Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Pharmacy ID:</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Pharmacy ID" value={this.state.store_id} onChange={this.onChangeStoreId} />
+                            <Form.Control required type="number" placeholder="Enter Pharmacy ID" value={this.state.store_id} onChange={this.onChangeStoreId.bind(this)} />
                         </Form.Group>   
 
                         <Form.Group>
                             <Form.Label>Phone Number:</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Pharmacy Phone Number" value={this.state.phone_number} onChange={this.onChangePhoneNumber} />
+                            <Form.Control required type="number" placeholder="Enter Pharmacy Phone Number" value={this.state.phone_number} onChange={this.onChangePhoneNumber.bind(this)} />
                         </Form.Group>    
 
                         <Form.Group>
                             <Form.Label>Opening Time:</Form.Label>
-                            <Form.Control required type="time" placeholder="Enter Opening Time" value={this.state.opening_time} onChange={this.onChangeOpeningTime} />
+                            <Form.Control required type="time" placeholder="Enter Opening Time" value={this.state.opening_time} onChange={this.onChangeOpeningTime.bind(this)} />
                         </Form.Group>  
 
                         <Form.Group>
                             <Form.Label>Closing Time:</Form.Label>
-                            <Form.Control required type="time" placeholder="Enter Closing Time" value={this.state.closing_time} onChange={this.onChangeClosingTime} />
+                            <Form.Control required type="time" placeholder="Enter Closing Time" value={this.state.closing_time} onChange={this.onChangeClosingTime.bind(this)} />
                         </Form.Group> 
 
                         <Form.Group>
                             <Form.Label>Address:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress}  />
+                            <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}  />
                         </Form.Group>                
 
                         <Button variant="primary" type="submit">
@@ -128,7 +128,7 @@ export default class PharmacyRegister extends Component{
                 </Jumbotron>
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="store_id">store_id:</label><br/>
             //         <input type="string" value={this.state.store_id} onChange={this.onChangeStoreId}/><br/>
             //         <label for="name">Name:</label><br/>

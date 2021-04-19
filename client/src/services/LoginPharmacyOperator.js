@@ -81,16 +81,16 @@ class PharmacyOperatorLogin extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Login As Pharmacy Operator</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -101,7 +101,7 @@ class PharmacyOperatorLogin extends Component{
                 {redirection_html}
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="aadhaar_id">Aadhaar:</label><br/>
             //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
             //         <label for="password">Password:</label><br/>
@@ -250,13 +250,13 @@ class AddStock extends Component{
     render(){
         return(
             <div>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit.bind(this)}>
                     <label for="drug_name">Drug name:</label><br/>
-                    <input type="string" value={this.state.drug_name} onChange={this.onChangeDrugName}/><br/>
+                    <input type="string" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}/><br/>
                     <label for="expiry_date">Expiry_date:</label><br/>
-                    <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate}/><br/>
+                    <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/><br/>
                     <label for="quantity">quantity:</label><br/>
-                    <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
+                    <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/><br/>
                     <br></br>
                     <input type="submit" value="Submit"/>
                 </form>
@@ -421,13 +421,13 @@ class UpdateStock extends Component{
         return(
             <div>
                 <label for="drug_name">Select drug_name:</label><br/>
-                <select name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName}>
+                <select name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}>
                     {info}
                 </select><br/>
                 <label for="expiry_date">Expiry_date:</label><br/>
-                <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate}/><br/>
+                <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/><br/>
                 <label for="quantity">quantity:</label><br/>
-                <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
+                <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/><br/>
                 <br></br>
                 <Link onClick={this.onClickUpdate}>Update</Link><br></br>
                 <Link onClick={this.onClickDelete}>Delete</Link><br></br>

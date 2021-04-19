@@ -81,16 +81,16 @@ class HospitalOperatorLogin extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Login As Hospital Operator</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -101,7 +101,7 @@ class HospitalOperatorLogin extends Component{
                 {redirection_html}
             </Container> 
             // <div>
-            //     <form onSubmit={this.onSubmit}>
+            //     <form onSubmit={this.onSubmit.bind(this)}>
             //         <label for="aadhaar_id">Aadhaar:</label><br/>
             //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
             //         <label for="password">Password:</label><br/>
@@ -203,7 +203,7 @@ class ViewData extends Component{
         return(
             <div>
                 <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000"/><br/>    
+                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId.bind(this)} Min="100000000000"/><br/>    
                 <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
                 {this.state.patientData ? <DisplayPatientData user={this.state.patientData} />: null}
             </div>
@@ -289,17 +289,17 @@ class UpdateData extends Component{
         return(
             <div>
                 <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000"/><br/>    
+                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId.bind(this)} Min="100000000000"/><br/>    
                 <label for="last_check_up">last_checkup_date:</label><br/>
-                <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate} /><br/>
+                <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate.bind(this)} /><br/>
                 <label for="Spo2">Spo2:</label><br/>
-                <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2} /><br/>
+                <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2.bind(this)} /><br/>
                 <label for="temperature">Temperature:</label><br/>
-                <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature} /><br/>
+                <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature.bind(this)} /><br/>
                 <label for="pulse_rate">pulse_rate:</label><br/>
-                <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate} /><br/>
+                <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate.bind(this)} /><br/>
                 <label for="comorbidity">comorbidity:</label><br/>
-                <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity} /><br/>
+                <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity.bind(this)} /><br/>
                 <Link onClick={this.onClickUpdateData}>Update</Link><br></br>
             </div>
         )

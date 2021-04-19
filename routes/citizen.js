@@ -214,7 +214,7 @@ router.post(
           user.temperature = await temperature;
           user.pulse_rate = await pulse_rate;
           user.comorbidity = await comorbidity;
-          user.bmi = (user.weight/user.height)*10000;
+          user.bmi = (user.weight/user.height**2)*10000;
 
           await user.save();
 
@@ -272,7 +272,7 @@ router.post(
           user.temperature = await temperature;
           user.pulse_rate = await pulse_rate;
           user.comorbidity = await comorbidity;
-          user.bmi = (user.weight/user.height)*10000;
+          user.bmi = (user.weight/user.height**2)*10000;
 
           await user.save();
 

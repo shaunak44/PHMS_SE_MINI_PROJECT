@@ -14,6 +14,8 @@ import {
   FormControl,
   Button,
   NavDropdown,
+  Container,
+  Jumbotron,
 } from 'react-bootstrap';
 import Chatbot from './services/Chatbot'
 import SignUp from './services/signUp'
@@ -134,8 +136,11 @@ export default App1;
 function Home() {
 
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <Container>
+      <Jumbotron>
+        <h2>Home Page</h2><hr></hr>
+        <Chatbot></Chatbot>
+      </Jumbotron>
+    </Container>
   );
 }

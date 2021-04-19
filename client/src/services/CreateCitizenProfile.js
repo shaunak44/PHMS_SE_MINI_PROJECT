@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container,
+    Card,
+    CardDeck
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
  
 class CreateCitizenProfile extends Component{
     constructor(props) {
@@ -135,34 +144,71 @@ class CreateCitizenProfile extends Component{
 
     render(){
         return(
-            <div>       
-                <form onSubmit={this.onSubmit}>
-                    <label for="name">Name:</label><br/>
-                    <input type="name" value={this.state.name} onChange={this.onChangeName}/><br/>
-                    <label for="address">Address:</label><br/>
-                    <input type="address" value={this.state.address} onChange={this.onChangeAddress}/><br/>
-                    <label for="phoneNo">Phone Number:</label><br/>
-                    <input type="phoneNo" value={this.state.phoneNumber} onChange={this.onChangePhoneNo} /><br/>
-                    <label for="age">Age:</label><br/>
-                    <input type="number" value={this.state.age} onChange={this.onChangeAge} /><br/>
-                    <label for="height">Height:</label><br/>
-                    <input type="mumber" value={this.state.height} onChange={this.onChangeHeight} /><br/>
-                    <label for="weight">Weight:</label><br/>
-                    <input type="number" value={this.state.weight} onChange={this.onChangeWeight} /><br/>
-                    <label for="last_check_up">last_checkup_date:</label><br/>
-                    <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate} /><br/>
-                    <label for="Spo2">Spo2:</label><br/>
-                    <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2} /><br/>
-                    <label for="temperature">Temperature:</label><br/>
-                    <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature} /><br/>
-                    <label for="pulse_rate">pulse_rate:</label><br/>
-                    <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate} /><br/>
-                    <label for="comorbidity">comorbidity:</label><br/>
-                    <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity} /><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form> 
-            </div> 
+            <Container>
+                <Jumbotron>
+                    <h2>Create Profile</h2>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
+                            <Form.Group>
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control required type="text" placeholder="Enter Your Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Address</Form.Label>
+                                <Form.Control required type="text" placeholder="Enter Your Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Phone Number</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Phone Number" value={this.state.phoneNumber} onChange={this.onChangePhoneNo.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Age</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Age" value={this.state.age} onChange={this.onChangeAge.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Height</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Height (in cm)" value={this.state.height} onChange={this.onChangeHeight.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Weight</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Weight (in kg)" value={this.state.weight} onChange={this.onChangeWeight.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Last Checkup Date</Form.Label>
+                                <Form.Control required type="date" placeholder="Enter Last Checkup date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate.bind(this)} />
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>SPO2</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your SPO2" value={this.state.spo2} onChange={this.onChangeSpo2.bind(this)}/>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Temperature</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Temperature" value={this.state.temperature} onChange={this.onChangeTemperature.bind(this)}/>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Pulse Rate</Form.Label>
+                                <Form.Control required type="number" placeholder="Enter Your Pulse Rate" value={this.state.pulse_rate} onChange={this.onChangePulseRate.bind(this)}/>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Comorbidity</Form.Label>
+                                <Form.Control required type="text" placeholder="Enter Your Comorbidity" value={this.state.comorbidity} onChange={this.onChangeComorbidity.bind(this)}/>
+                            </Form.Group>
+
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                    </Form>
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -195,13 +241,46 @@ class ViewCitizenInfo extends Component{
 
     render(){
         return(
-            <div>
-                <p>{this.state.citizenInfo.name}</p>
-                <p>{this.state.citizenInfo.age}</p>
-                <p>{this.state.citizenInfo.height}</p>
-                <p>{this.state.citizenInfo.bmi}</p>
-                <p>{this.state.citizenInfo.comorbidity}</p>
-            </div>
+            <Container>
+                <h2>Profile Highlights</h2>
+                <hr></hr>
+                <CardDeck>
+                    <Card    bg='warning' text='dark' style={{ width: '18rem' }} className="mb-2">
+                        <Card.Header>Name</Card.Header>
+                        <Card.Body>
+                        <Card.Title> {this.state.citizenInfo.name} </Card.Title>
+                        </Card.Body>
+                    </Card>
+
+                    <Card    bg='secondary' text='light' style={{ width: '18rem' }} className="mb-2">
+                        <Card.Header>Age</Card.Header>
+                        <Card.Body>
+                        <Card.Title> {this.state.citizenInfo.age} yrs</Card.Title>
+                        </Card.Body>
+                    </Card>
+
+                    <Card    bg='success' text='light' style={{ width: '18rem' }} className="mb-2">
+                        <Card.Header>Height</Card.Header>
+                        <Card.Body>
+                        <Card.Title> {this.state.citizenInfo.height} cm </Card.Title>
+                        </Card.Body>
+                    </Card>
+
+                    <Card    bg='info' text='light' style={{ width: '18rem' }} className="mb-2">
+                        <Card.Header>BMI</Card.Header>
+                        <Card.Body>
+                        <Card.Title> {(this.state.citizenInfo.weight / (this.state.citizenInfo.height/100) ** 2).toFixed(2)} </Card.Title>
+                        </Card.Body>
+                    </Card>
+
+                    <Card    bg='danger' text='light' style={{ width: '18rem' }} className="mb-2">
+                        <Card.Header>Comorbidity</Card.Header>
+                        <Card.Body>
+                        <Card.Title> {this.state.citizenInfo.comorbidity} </Card.Title>
+                        </Card.Body>
+                    </Card>
+                </CardDeck>
+            </Container>
         )
     }
 }
@@ -260,14 +339,17 @@ class BookAppointment extends Component{
 
     render(){
         return(
-            <div>
-                <h1>
-                    Book an appointment.
-                </h1>
-                <label for="doctor_id">DoctorId:</label><br/>
-                <input type="number" value={this.state.doctor_id} onChange={this.onChangeDoctorId}/><br/>
-                <DayTimePicker timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>;
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h1>Book an appointment.</h1><hr/>
+
+                    <Form.Group>
+                        <Form.Label>Doctor ID</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Doctor ID" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)} />
+                    </Form.Group>
+                    <DayTimePicker bg='primary' timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -316,19 +398,26 @@ class CheckAppointment extends Component{
         const info = this.state.appointments;
         const listItems = info.map((i) => 
             <div key={i.slot}>
-                <h3>{i.doctor_id}</h3>
-                <h3>{i.slot}</h3>
-                <h3>{i.status ? "Confirmed": "Waiting for confirmation"}</h3>
+                <CardDeck>
+                <Card border="info" style={{ width: '18rem' }}>
+                    <Card.Header>Doctor ID: {i.doctor_id}</Card.Header>
+                    <Card.Body>
+                        <Card.Text>{i.slot}</Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                        {i.status ? "Confirmed": "Waiting for confirmation"}
+                    </Card.Footer>
+                </Card>
+                </CardDeck>
             </div>);
        
         return(
-            <div>
-                <h1>
-                    Your appointments.
-                </h1>
-                {listItems}
-                
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h3> Your Appointments.</h3><hr></hr>
+                    {listItems}
+                </Jumbotron>    
+            </Container>
         )
     }
 }

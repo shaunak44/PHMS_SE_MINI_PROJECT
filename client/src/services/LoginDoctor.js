@@ -7,7 +7,8 @@ import {
     Form,
     Button,
     Jumbotron,
-    Container
+    Container,
+    Card
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -80,16 +81,16 @@ class DoctorLogin extends Component{
             <Container>
                 <Jumbotron>
                     <h2>Login As Doctor</h2>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control required onChange={this.onChangePassword} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
@@ -99,18 +100,6 @@ class DoctorLogin extends Component{
                 </Jumbotron>
                 {redirection_html}
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit}>
-            //         <label for="aadhaar_id">Aadhaar:</label><br/>
-            //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-            //         <label for="password">Password:</label><br/>
-            //         <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form>
-            //     {redirection_html}
-            // </div> 
-            
         )
     }
 }
@@ -189,15 +178,16 @@ class DoctorDashboard extends Component{
     }   
     render(){
         return(
-            <div>
-                <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>    
-                <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
-                {this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
-                <Link onClick={this.onClickViewAppointment}>Appointment Details</Link><br></br>
-                {this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
-                <a href="/logout">Logout.</a>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h3>Doctor Dashboard</h3> <hr></hr>
+                    {/* <label for="aadhaar_id">Aadhaar:</label><br/> */}
+                    {/* <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000"/><br/>  */}
+                    <Button block onClick={this.onClickViewPatientProfile} size='lg' variant='info'>View Patient Profile</Button>{this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
+                    <Button block onClick={this.onClickViewAppointment} size='lg' variant='dark'>Appointment Details</Button>{this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -210,20 +200,22 @@ export{
 
 function DisplayPatientData(props) {
     if(props.user[0]){
+        console.log(props);
+        
         return (
             <div>
-                <h2>aadhaar: {props.user[0].aadhaar_id}</h2>
+                <h2>Aadhaar: {props.user[0].aadhaar_id}</h2>
                 <h2>Name: {props.user[0].name}</h2>
             </div>
         );
     }
     else{
         return(
-            <div>
-                <h2>
-                    Patient record not found.
-                </h2>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h2>Nothing To Show</h2>
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -260,17 +252,22 @@ class DisplayAppointments extends Component {
     render(){
         if(this.props.user.length === 0){
             return(
-                <div>
-                    No appointements pending or scheduled.
-                </div>
+                <Container>
+                    <Jumbotron>
+                        <h3>No appointements Pending Or Scheduled.</h3>
+                    </Jumbotron>
+                </Container>
             )
         }
         const listItems = this.props.user.map((i) => 
-            <div key={i.slot}>
-                <h3>{i.aadhaar_id}</h3>
-                <h3>{i.slot}</h3>
-                <h3>{i.status ? "Confirmed": <button onClick={(e) => this.onClickConfirm(i, e)}>Confirm appointment </button>}</h3>
-            </div>);
+        <Card style={{ width: '18rem' }}>
+            <Card.Body>
+                <Card.Title>{i.slot}</Card.Title>
+                <Card.Text> {i.aadhaar_id} </Card.Text>
+                {i.status ? <Button variant='warning'>Confirmed</Button>: <Button variant="success" onClick={(e) => this.onClickConfirm(i, e).bind(this)}>Confirm Appointment </Button>}
+            </Card.Body>
+        </Card>
+            );
         return(
             <div>
                 {listItems}

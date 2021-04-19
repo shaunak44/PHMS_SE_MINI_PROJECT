@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {
+    Container,
+} from 'react-bootstrap'
 
 export default class Chatbot extends Component{
     talk(event){
@@ -28,14 +31,14 @@ export default class Chatbot extends Component{
     }
     render() {
         return (
-            <div>
-                <h2>CHATBOT {process.env.REACT_APP_SERVER_PORT}</h2>
+            <Container>
+                <h2>CHATBOT</h2>
                 <h4 id="chatLog"></h4>
                 <div style={{ textAlign: "" }}>
                     <input id="userbox" type="text" onKeyDown={this.talk}></input>
                 </div>
                 <h3>Hello I am CHABOT, Ask me your queries !</h3>
-            </div>
+            </Container>
         )
     }
 }
