@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {
-    Container,
+    Container, Jumbotron, Form, Button
 } from 'react-bootstrap'
 
 export default class Chatbot extends Component{
@@ -12,7 +12,7 @@ export default class Chatbot extends Component{
             "how are you?": "I am great !!",
             "life is like hell": "Are you in TY COMP at COEP ?",
             "tell me a random fact": "Life would have been much easy, if there was no Abhijit Sir.",
-            "yes": "Okay ! Have A Great Day !!"
+            "bye": "Bye ! Have A Great Day !!"
         }
         console.log(event);
         if(event.keyCode === 13){
@@ -32,12 +32,15 @@ export default class Chatbot extends Component{
     render() {
         return (
             <Container>
-                <h2>CHATBOT</h2>
-                <h4 id="chatLog"></h4>
-                <div style={{ textAlign: "" }}>
-                    <input id="userbox" type="text" onKeyDown={this.talk}></input>
-                </div>
-                <h3>Hello I am CHABOT, Ask me your queries !</h3>
+                <Jumbotron>
+                    <h2>CHATBOT</h2><hr></hr>
+                    <h4 id="chatLog"></h4>
+                    <Form.Group>
+                        <Form.Control id="userbox" type="text" onKeyDown={this.talk} placeholder="Ask Your Queries" />
+                    </Form.Group>
+                    {/* <input id="userbox" type="text" onKeyDown={this.talk}></input> */}
+                    <h3>Hello I am CHABOT, Ask me your queries !</h3>
+                </Jumbotron>
             </Container>
         )
     }

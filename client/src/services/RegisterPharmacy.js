@@ -93,7 +93,7 @@ export default class PharmacyRegister extends Component{
                     <Form onSubmit={this.onSubmit.bind(this)}>
                         <Form.Group>
                             <Form.Label>Name:</Form.Label>
-                            <Form.Control required type="text" placeholder="Enter Hospital Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
+                            <Form.Control required type="text" placeholder="Enter Pharmacy Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
                         </Form.Group>
 
                         <Form.Group>
@@ -127,24 +127,6 @@ export default class PharmacyRegister extends Component{
                     </Form>
                 </Jumbotron>
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="store_id">store_id:</label><br/>
-            //         <input type="string" value={this.state.store_id} onChange={this.onChangeStoreId}/><br/>
-            //         <label for="name">Name:</label><br/>
-            //         <input type="string" value={this.state.name} onChange={this.onChangeName}/><br/>
-            //         <label for="phoneNo">Phone Number:</label><br/>
-            //         <input type="number" value={this.state.phone_number} onChange={this.onChangePhoneNumber} /><br/>
-            //         <label for="opening_time">opening_time:</label><br/>
-            //         <input type="time" value={this.state.opening_time} onChange={this.onChangeOpeningTime} /><br/>
-            //         <label for="address">address:</label><br/>
-            //         <input type="string" value={this.state.address} onChange={this.onChangeAddress} /><br/>
-            //         <label for="closing_time">Type:</label><br/>
-            //         <input type="time" value={this.state.closing_time} onChange={this.onChangeClosingTime} /><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form> 
-            // </div>
         )
     }
 }

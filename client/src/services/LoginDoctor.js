@@ -181,8 +181,10 @@ class DoctorDashboard extends Component{
             <Container>
                 <Jumbotron>
                     <h3>Doctor Dashboard</h3> <hr></hr>
-                    {/* <label for="aadhaar_id">Aadhaar:</label><br/> */}
-                    {/* <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000"/><br/>  */}
+                    <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
+                    </Form.Group>
                     <Button block onClick={this.onClickViewPatientProfile} size='lg' variant='info'>View Patient Profile</Button>{this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
                     <Button block onClick={this.onClickViewAppointment} size='lg' variant='dark'>Appointment Details</Button>{this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
                     <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
@@ -203,10 +205,14 @@ function DisplayPatientData(props) {
         console.log(props);
         
         return (
-            <div>
-                <h2>Aadhaar: {props.user[0].aadhaar_id}</h2>
-                <h2>Name: {props.user[0].name}</h2>
-            </div>
+            <Card>
+                <Card.Body>
+                    <blockquote className="blockquote mb-0">
+                        <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
+                        <h4>Name: {props.user[0].name}</h4>
+                    </blockquote>
+                </Card.Body>
+            </Card>
         );
     }
     else{

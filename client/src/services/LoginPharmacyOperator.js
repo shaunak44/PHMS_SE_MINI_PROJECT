@@ -5,7 +5,9 @@ import {
     Form,
     Button,
     Jumbotron,
-    Container
+    Container,
+    Card,
+    CardDeck
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -100,18 +102,6 @@ class PharmacyOperatorLogin extends Component{
                 </Jumbotron>
                 {redirection_html}
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="aadhaar_id">Aadhaar:</label><br/>
-            //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-            //         <label for="password">Password:</label><br/>
-            //         <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form>
-            //     {redirection_html}
-            // </div> 
-            
         )
     }
 }
@@ -173,14 +163,15 @@ class PharmacyOperatorDashboard extends Component{
 
     render(){
         return(
-            <div>
-                <Link onClick={this.onClickAddStocks}>Add stocks</Link><br></br>
-                {this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickShowStocks}>Show stocks</Link><br></br>
-                {this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickUpdateStocks}>Update and Delete stocks</Link><br></br>
-                {this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h3>Pharmacy Operator Dashboard</h3><hr></hr>
+                    <Button block onClick={this.onClickAddStocks} size='lg' variant='primary'>Add Stocks</Button>{this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
+                    <Button block onClick={this.onClickShowStocks} size='lg' variant='warning'>Show Stocks</Button>{this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
+                    <Button block onClick={this.onClickUpdateStocks} size='lg' variant='success'>Update Or Delete Stocks</Button>{this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
+                    
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -249,18 +240,26 @@ class AddStock extends Component{
     }
     render(){
         return(
-            <div>
-                <form onSubmit={this.onSubmit.bind(this)}>
-                    <label for="drug_name">Drug name:</label><br/>
-                    <input type="string" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}/><br/>
-                    <label for="expiry_date">Expiry_date:</label><br/>
-                    <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/><br/>
-                    <label for="quantity">quantity:</label><br/>
-                    <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/><br/>
-                    <br></br>
-                    <input type="submit" value="Submit"/>
-                </form>
-            </div>
+            <Form onSubmit={this.onSubmit.bind(this)}>
+                <Form.Group>
+                    <Form.Label>Drug Name</Form.Label>
+                    <Form.Control required type="text" placeholder="Enter Drug Name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)} />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>Expiry Date</Form.Label>
+                    <Form.Control required type="date" placeholder="Enter Expiry Date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)} />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>Quantity</Form.Label>
+                    <Form.Control required type="number" placeholder="Enter Quantity" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)} />
+                </Form.Group>
+                
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
         )
     }
 }
@@ -294,17 +293,23 @@ class ShowStock extends Component{
         const info = []
         for (let i = 0; i < this.state.stocksInfo.length; i++) {
             info.push(
-                <ul>
-                    <li>{this.state.stocksInfo[i].drug_name}</li>
-                    <li>{this.state.stocksInfo[i].expiry_date}</li>
-                    <li>{this.state.stocksInfo[i].quantity}</li>
-                </ul>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{this.state.stocksInfo[i].drug_name}</Card.Title>
+                        <Card.Text>
+                            Expiry Date: {this.state.stocksInfo[i].expiry_date}
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                        Quantity: {this.state.stocksInfo[i].quantity}
+                    </Card.Footer>
+                </Card>
             )
         }
         return(
-            <div>
+            <CardDeck>
                 {info}
-            </div>
+            </CardDeck>
         )
     }
 }
@@ -418,20 +423,34 @@ class UpdateStock extends Component{
                 </option>
             )
         }
+        if(info.length === 0){
+            info.push(<option>Stock Empty</option>)
+        }
+        
         return(
-            <div>
-                <label for="drug_name">Select drug_name:</label><br/>
-                <select name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}>
-                    {info}
-                </select><br/>
-                <label for="expiry_date">Expiry_date:</label><br/>
-                <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/><br/>
-                <label for="quantity">quantity:</label><br/>
-                <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/><br/>
-                <br></br>
-                <Link onClick={this.onClickUpdate}>Update</Link><br></br>
-                <Link onClick={this.onClickDelete}>Delete</Link><br></br>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Select Drug Name</Form.Label>
+                        <Form.Control as="select" name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}>
+                            {info}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Expiry Date</Form.Label>
+                        <Form.Control required type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Quantity" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/>
+                    </Form.Group>
+
+                    <Button onClick={this.onClickUpdate} variant="success">Update</Button>{' '}
+                    <Button onClick={this.onClickDelete} variant="danger">Delete</Button>
+                </Jumbotron>
+            </Container>
         )
     }
 }
