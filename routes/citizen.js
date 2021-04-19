@@ -299,5 +299,20 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+router.get("/viewstats", async (req, res) => {
+  try {
+  
+    const user = await Citizen.find();
+    if (!user) {
+          return res.status(400).json({
+              message: "Citizen not Found"
+          });
+      }
+    res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user"});
+  }
+});
+
 
 module.exports = router;

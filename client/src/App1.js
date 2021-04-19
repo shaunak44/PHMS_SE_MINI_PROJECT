@@ -29,6 +29,9 @@ import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
+import FaqPage from './services/FAQ'
+import {AgePie, BmiPie, BedsBar, CheckupPie} from './services/Analysis'
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,6 +61,17 @@ function App1() {
               <NavDropdown.Item as={Link} to="/registeroperator" >Operator</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/registerdoctor">Doctor</NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
+
+            {/* <Nav.Link as={Link} to="/analysis">Analysis</Nav.Link> */}
+            <NavDropdown title="Analysis" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/agepie" >Age</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bmipie" >BMI</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bedsbar" >Beds</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/checkuppie" >Last Checkup</NavDropdown.Item>
+            </NavDropdown>
+
           </Nav>
 
           <Form inline>
@@ -126,6 +140,21 @@ function App1() {
           </Route>
           <Route exact path="/registerdoctor">
             <DoctorRegister />
+          </Route>
+          <Route exact path="/faq">
+            <FaqPage />
+          </Route>
+          <Route exact path="/agepie">
+            <AgePie />
+          </Route>
+          <Route exact path="/bmipie">
+            <BmiPie />
+          </Route>
+          <Route exact path="/bedsbar">
+            <BedsBar />
+          </Route>
+          <Route exact path="/checkuppie">
+            <CheckupPie />
           </Route>
         </Switch>
       </div>

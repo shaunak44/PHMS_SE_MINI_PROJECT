@@ -169,7 +169,7 @@ class PharmacyOperatorDashboard extends Component{
                     <Button block onClick={this.onClickAddStocks} size='lg' variant='primary'>Add Stocks</Button>{this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
                     <Button block onClick={this.onClickShowStocks} size='lg' variant='warning'>Show Stocks</Button>{this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
                     <Button block onClick={this.onClickUpdateStocks} size='lg' variant='success'>Update Or Delete Stocks</Button>{this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
-                    
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
                 </Jumbotron>
             </Container>
         )

@@ -141,6 +141,7 @@ class HospitalOperatorDashboard extends Component{
                     <h2>Hospital Operator Dashboard</h2><hr></hr>
                     <Button block onClick={this.onClickViewData} size='lg' variant='secondary'>View Patient Data</Button>{this.state.showViewData ? <ViewData user={this.state.operatorInfo} />: null}
                     <Button block onClick={this.onClickUpdateData} size='lg' variant='dark'>Update Patient Data</Button>{this.state.showUpdateData ? <UpdateData user={this.state.operatorInfo} />: null}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
                 </Jumbotron>
             </Container>
         )
