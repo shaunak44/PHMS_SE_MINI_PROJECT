@@ -69,8 +69,13 @@ class AgePie extends Component {
     }
 
     render() {
+        const divStyle = {
+            display: 'block',
+            width: 'max-content',
+            margin: '20px auto',
+        };
         return (
-        <div className="donut">
+        <div style={divStyle}>
             <Chart options={this.state.options} series={this.state.series} type="donut" width="500" />
         </div>
         );
@@ -147,8 +152,13 @@ class BmiPie extends Component {
     }
 
     render() {
+        const divStyle = {
+            display: 'block',
+            width: 'max-content',
+            margin: '20px auto',
+        };
         return (
-        <div className="donut">
+        <div style={divStyle}>
             <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
         </div>
         );
@@ -224,7 +234,15 @@ class BedsBar extends Component {
     }
 
     render() {
+        const divStyle = {
+            display: 'block',
+            width: 'max-content',
+            margin: '20px auto',
+        };
         return (
+            <div style={divStyle}>
+
+            
             <div className="app">
             <div className="row">
                 <div className="mixed-chart">
@@ -235,6 +253,7 @@ class BedsBar extends Component {
                     width="500"
                 />
                 </div>
+            </div>
             </div>
             </div>
         );
@@ -313,8 +332,13 @@ class CheckupPie extends Component {
     }
 
     render() {
+        const divStyle = {
+            display: 'block',
+            width: 'max-content',
+            margin: '20px auto',
+        };
         return (
-        <div className="donut">
+        <div style={divStyle}>
             <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
         </div>
         );
