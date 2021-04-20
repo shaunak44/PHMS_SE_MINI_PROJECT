@@ -6,6 +6,18 @@ import {
   Link,
   withRouter
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  Navbar,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+  NavDropdown,
+  Container,
+  Jumbotron,
+} from 'react-bootstrap';
+import Chatbot from './services/Chatbot'
 import SignUp from './services/signUp'
 import Login from './services/Login'
 import {DoctorLogin, DoctorDashboard} from './services/LoginDoctor'
@@ -17,6 +29,13 @@ import PharmacyRegister from './services/RegisterPharmacy'
 import OperatorRegister from './services/RegisterOperator'
 import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
+import FaqPage from './services/FAQ'
+import {AgePie, BmiPie, BedsBar, CheckupPie} from './services/Analysis'
+
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Component } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar} from 'react-bootstrap'
@@ -26,40 +45,45 @@ function App1() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/signup">Sign Up</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/logindoctor">Doctor Login</Link>
-            </li>
-            <li>
-              <Link to="/loginpharmacyoperator">Pharmacy operator Login</Link>
-            </li>
-            <li>
-              <Link to="/loginhospitaloperator">Hospital operator Login</Link>
-            </li>
-            <li>
-              <Link to="/registerhospital">Register as hospital</Link>
-            </li>
-            <li>
-              <Link to="/registerpharmacy">Register as pharmacy</Link>
-            </li>
-            <li>
-              <Link to="/registeroperator">Register as operator</Link>
-            </li>
-            <li>
-              <Link to="/registerdoctor">Register as doctor</Link>
-            </li>
-          </ul>
-        </nav>
+     
+        <Navbar bg="dark" variant="dark" >
+          <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
+            
+            <NavDropdown title="Login" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/login" >Citizen</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/logindoctor" >Doctor</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/loginpharmacyoperator" >Pharmacy Operator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="loginhospitaloperator">Hospital Operator</NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown title="Register" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/registerhospital" >Hospital</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registerpharmacy" >Pharmacy</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registeroperator" >Operator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/registerdoctor">Doctor</NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link as={Link} to="/faq">FAQ</Nav.Link>
+
+            {/* <Nav.Link as={Link} to="/analysis">Analysis</Nav.Link> */}
+            <NavDropdown title="Analysis" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/agepie" >Age</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bmipie" >BMI</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/bedsbar" >Beds</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/checkuppie" >Last Checkup</NavDropdown.Item>
+            </NavDropdown>
+
+          </Nav>
+
+          <Form inline>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-info">Search</Button>
+          </Form>
+        </Navbar>
+        <br />
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -80,7 +104,7 @@ function App1() {
             <HospitalOperatorLogin />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Chatbot />
           </Route>
           <Route exact path="/citizen/profile">
             <CitizenProfile />
@@ -121,6 +145,21 @@ function App1() {
           <Route exact path="/registerdoctor">
             <DoctorRegister />
           </Route>
+          <Route exact path="/faq">
+            <FaqPage />
+          </Route>
+          <Route exact path="/agepie">
+            <AgePie />
+          </Route>
+          <Route exact path="/bmipie">
+            <BmiPie />
+          </Route>
+          <Route exact path="/bedsbar">
+            <BedsBar />
+          </Route>
+          <Route exact path="/checkuppie">
+            <CheckupPie />
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -131,6 +170,19 @@ const AppWithRouter = withRouter(App1);
 export {AppWithRouter};
 export default App1;
 
-function Home() {
-  return (<h2>welcome to Home Page</h2>);
+class Home extends Component {
+  componentDidMount(){
+    toast.success("logged out sucessfully");
+  }
+  render(){
+    return (
+      <Container>
+        <Jumbotron>
+          <h2>Home Page</h2><hr></hr>
+          <Chatbot></Chatbot>
+        </Jumbotron>
+        <ToastContainer />
+      </Container>
+    );
+  }
 }

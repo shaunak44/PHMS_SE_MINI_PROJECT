@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Redirect, Link,} from 'react-router-dom';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container,
+    Card
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const REDIRECT_PATH_LOGIN = 'hospitaloperator/dashboard'
+
+
 
 class HospitalOperatorLogin extends Component{
     constructor(props) {
@@ -37,7 +49,7 @@ class HospitalOperatorLogin extends Component{
         sessionStorage.setItem('aadhaar_id_hospital', this.state.aadhaar_id)
         console.log(userObject)
 
-        axios.post('http://localhost:5000/operator/hospitallogin', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/hospitallogin`, userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -54,6 +66,7 @@ class HospitalOperatorLogin extends Component{
         
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid creds')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -71,19 +84,29 @@ class HospitalOperatorLogin extends Component{
             redirection_html = "";
         }
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar_id">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-                    <label for="password">Password:</label><br/>
-                    <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form>
+            <Container>
+                <Jumbotron>
+                    <h2>Login As Hospital Operator</h2>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
+
+                        <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <ToastContainer/>
+                    </Form>
+                </Jumbotron>
                 {redirection_html}
-                
-            </div> 
-            
+            </Container> 
         )
     }
 }
@@ -119,12 +142,14 @@ class HospitalOperatorDashboard extends Component{
 
     render(){
         return(
-            <div>
-                <Link onClick={this.onClickViewData}>View Patient Data</Link><br></br>
-                {this.state.showViewData ? <ViewData user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickUpdateData}>Update Patient Data</Link><br></br>
-                {this.state.showUpdateData ? <UpdateData user={this.state.operatorInfo} />: null}
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h2>Hospital Operator Dashboard</h2><hr></hr>
+                    <Button block onClick={this.onClickViewData} size='lg' variant='secondary'>View Patient Data</Button>{this.state.showViewData ? <ViewData user={this.state.operatorInfo} />: null}
+                    <Button block onClick={this.onClickUpdateData} size='lg' variant='dark'>Update Patient Data</Button>{this.state.showUpdateData ? <UpdateData user={this.state.operatorInfo} />: null}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -156,7 +181,7 @@ class ViewData extends Component{
     onClickViewPatientProfile(e){
         e.preventDefault()
         console.log(this.state.aadhaar_id)
-        axios.get('http://localhost:5000/doctor/viewpatient', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/viewpatient`, {
             headers:{
                 'aadhaar_id': this.state.aadhaar_id
             }
@@ -174,10 +199,11 @@ class ViewData extends Component{
     render(){
         return(
             <div>
-                <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000"/><br/>    
-                <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
-                {this.state.patientData ? <DisplayPatientData user={this.state.patientData} />: null}
+                <Form.Group>
+                    <Form.Label>Aadhar ID</Form.Label>
+                    <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId.bind(this)} Min="100000000000"/>
+                    <Button variant='primary' onClick={this.onClickViewPatientProfile}>View Patient Profile</Button><br></br>{this.state.patientData ? <DisplayPatientData user={this.state.patientData} />: null}
+                </Form.Group>
             </div>
         )
     }
@@ -237,12 +263,13 @@ class UpdateData extends Component{
             comorbidity:this.state.comorbidity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/citizen/updateinfo', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/updateinfo`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Updated sucessfully')
         }).catch((error) => {
             console.log(error)
+            toast.success('Invalid details')
         });
 
         this.setState({
@@ -259,21 +286,46 @@ class UpdateData extends Component{
     render(){
         
         return(
-            <div>
-                <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} Min="100000000000"/><br/>    
-                <label for="last_check_up">last_checkup_date:</label><br/>
-                <input type="date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate} /><br/>
-                <label for="Spo2">Spo2:</label><br/>
-                <input type="number" value={this.state.spo2} onChange={this.onChangeSpo2} /><br/>
-                <label for="temperature">Temperature:</label><br/>
-                <input type="number" value={this.state.temperature} onChange={this.onChangeTemperature} /><br/>
-                <label for="pulse_rate">pulse_rate:</label><br/>
-                <input type="number" value={this.state.pulse_rate} onChange={this.onChangePulseRate} /><br/>
-                <label for="comorbidity">comorbidity:</label><br/>
-                <input type="text" value={this.state.comorbidity} onChange={this.onChangeComorbidity} /><br/>
-                <Link onClick={this.onClickUpdateData}>Update</Link><br></br>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <Form.Group>
+                        <Form.Label>Aadhaar</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Patient Aadhar" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId.bind(this)} Min="100000000000"/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Last Checkup Date</Form.Label>
+                        <Form.Control required type="date" placeholder="Enter Last Checkup Date" value={this.state.last_checkup_date} onChange={this.onChangeLastCheckupDate.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>SPO2</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter SPO2" value={this.state.spo2} onChange={this.onChangeSpo2.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Temperature</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Temperature" value={this.state.temperature} onChange={this.onChangeTemperature.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Pulse Rate</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Pulse Rate" value={this.state.pulse_rate} onChange={this.onChangePulseRate.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Comorbidity</Form.Label>
+                        <Form.Control required type="text" placeholder="Enter Temperature" value={this.state.comorbidity} onChange={this.onChangeComorbidity.bind(this)}/>
+                    </Form.Group>
+
+                    <Button variant="primary" onClick={this.onClickUpdateData}>
+                        Update
+                    </Button>
+
+                    <ToastContainer/>
+
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -281,17 +333,26 @@ class UpdateData extends Component{
 function DisplayPatientData(props) {
     if(props.user[0]){
         return (
-            <div>
-                <h2>aadhaar: {props.user[0].aadhaar_id}</h2>
-                <h2>Name: {props.user[0].name}</h2>
-            </div>
+            <Card>
+                <Card.Body>
+                    <blockquote className="blockquote mb-0">
+                        <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
+                        <h4>Name: {props.user[0].name}</h4>
+                        <h4>Age: {props.user[0].age}</h4>
+                        <h4>BMI: {props.user[0].bmi}</h4>
+                        <h4>Last checkup date: {props.user[0].last_checkup_date ? <>{props.user[0].last_checkup_date.substring(0, 10)}</>: null}</h4>
+                        <h4>Spo2: {props.user[0].spo2}</h4>
+                        <h4>Comorbidity: {props.user[0].comorbidity}</h4>
+                    </blockquote>
+                </Card.Body>
+            </Card>
         );
     }
     else{
         return(
             <div>
                 <h2>
-                    Patient record not found.
+                    Patient Record Not Found.
                 </h2>
             </div>
         )

@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 export default class PharmacyRegister extends Component{
     constructor(props) {
         super(props)
@@ -60,12 +69,14 @@ export default class PharmacyRegister extends Component{
             closing_time: this.state.closing_time,
         };
         console.log(userObject)
-        axios.post('http://localhost:5000/pharmacy/registerpharmacy', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/pharmacy/registerpharmacy`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Registration Sucessful')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Already registered or Invalid details')
         });
 
         this.setState({
@@ -80,24 +91,47 @@ export default class PharmacyRegister extends Component{
 
     render(){
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="store_id">store_id:</label><br/>
-                    <input type="string" value={this.state.store_id} onChange={this.onChangeStoreId}/><br/>
-                    <label for="name">Name:</label><br/>
-                    <input type="string" value={this.state.name} onChange={this.onChangeName}/><br/>
-                    <label for="phoneNo">Phone Number:</label><br/>
-                    <input type="number" value={this.state.phone_number} onChange={this.onChangePhoneNumber} /><br/>
-                    <label for="opening_time">opening_time:</label><br/>
-                    <input type="time" value={this.state.opening_time} onChange={this.onChangeOpeningTime} /><br/>
-                    <label for="address">address:</label><br/>
-                    <input type="string" value={this.state.address} onChange={this.onChangeAddress} /><br/>
-                    <label for="closing_time">Type:</label><br/>
-                    <input type="time" value={this.state.closing_time} onChange={this.onChangeClosingTime} /><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form> 
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h2>Register Pharmacy</h2>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
+                        <Form.Group>
+                            <Form.Label>Name:</Form.Label>
+                            <Form.Control required type="text" placeholder="Enter Pharmacy Name" value={this.state.name} onChange={this.onChangeName.bind(this)} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Pharmacy ID:</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Pharmacy ID" value={this.state.store_id} onChange={this.onChangeStoreId.bind(this)} />
+                        </Form.Group>   
+
+                        <Form.Group>
+                            <Form.Label>Phone Number:</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Pharmacy Phone Number" value={this.state.phone_number} onChange={this.onChangePhoneNumber.bind(this)} />
+                        </Form.Group>    
+
+                        <Form.Group>
+                            <Form.Label>Opening Time:</Form.Label>
+                            <Form.Control required type="time" placeholder="Enter Opening Time" value={this.state.opening_time} onChange={this.onChangeOpeningTime.bind(this)} />
+                        </Form.Group>  
+
+                        <Form.Group>
+                            <Form.Label>Closing Time:</Form.Label>
+                            <Form.Control required type="time" placeholder="Enter Closing Time" value={this.state.closing_time} onChange={this.onChangeClosingTime.bind(this)} />
+                        </Form.Group> 
+
+                        <Form.Group>
+                            <Form.Label>Address:</Form.Label>
+                            <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}  />
+                        </Form.Group>                
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <ToastContainer/>
+                    </Form>
+                </Jumbotron>
+            </Container> 
         )
     }
 }

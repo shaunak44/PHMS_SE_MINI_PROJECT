@@ -3,6 +3,17 @@ import axios from 'axios';
 import {Redirect, Link,} from 'react-router-dom';
 import { selectFields } from 'express-validator/src/select-fields';
 import { compare } from 'bcryptjs';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container,
+    Card
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const REDIRECT_PATH_LOGIN = 'doctor/dashboard'
 
@@ -42,17 +53,13 @@ class DoctorLogin extends Component{
         sessionStorage.setItem('doctor_aadhaar_id', this.state.aadhaar_id);
         console.log(userObject)
 
-        axios.post('http://localhost:5000/doctor/login', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/login`, userObject)
         .then((res) => {
-
             // Save data to sessionStorage
-            
-
             this.setState({redirect_flag: true}) 
-            
-        
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid creds')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -70,19 +77,29 @@ class DoctorLogin extends Component{
             redirection_html = "";
         }
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar_id">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-                    <label for="password">Password:</label><br/>
-                    <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form>
+            <Container>
+                <Jumbotron>
+                    <h2>Login As Doctor</h2>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
+
+                        <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <ToastContainer/>
+                    </Form>
+                </Jumbotron>
                 {redirection_html}
-                
-            </div> 
-            
+            </Container> 
         )
     }
 }
@@ -105,10 +122,13 @@ class DoctorDashboard extends Component{
             appointmentCollection: '',
         }
     }
+
+
     onClickViewPatientProfile(e) {
         e.preventDefault();
+        this.setState({showData:false})
         console.log(this.state.aadhaar_id)
-        axios.get('http://localhost:5000/doctor/viewpatient', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/viewpatient`, {
             headers:{
                 'aadhaar_id': this.state.aadhaar_id
             }
@@ -122,12 +142,13 @@ class DoctorDashboard extends Component{
             console.log(error);
         })
     }
+    
 
     async onClickViewAppointment(e) {
         e.preventDefault();
         let doctor_aadhaar_id = sessionStorage.getItem('doctor_aadhaar_id')
         console.log(doctor_aadhaar_id);
-        await axios.get('http://localhost:5000/doctor/doctorInfo', {
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/doctorInfo`, {
             headers:{
                 'aadhaar_id': doctor_aadhaar_id,
             }
@@ -140,7 +161,7 @@ class DoctorDashboard extends Component{
             console.log(error);
         })
 
-        await axios.get('http://localhost:5000/appointment/doctorappointmentinfo', {
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/doctorappointmentinfo`, {
             headers:{
                 'doctor_id': this.state.doctor_id
             }
@@ -161,15 +182,24 @@ class DoctorDashboard extends Component{
     }   
     render(){
         return(
-            <div>
-                <label for="aadhaar_id">Aadhaar:</label><br/>
-                <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>    
-                <Link onClick={this.onClickViewPatientProfile}>View Patient Profile</Link><br></br>
-                {this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
-                <Link onClick={this.onClickViewAppointment}>Appointment Details</Link><br></br>
-                {this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
-                <a href="/logout">Logout.</a>
-            </div>
+            <Container>
+                <Container>
+                    <Jumbotron>
+                        <h3>Doctor Dashboard</h3> <hr></hr>
+                        <Form.Group>
+                            <Form.Label>Enter Aadhaar Id of Patient</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhaar Id of Patient" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)}/>
+                        </Form.Group>
+                        <Button block onClick={this.onClickViewPatientProfile} size='lg' variant='info'>View Patient Profile</Button>{this.state.showData ? <DisplayPatientData user={this.state.usersCollection} />: null}
+                        </Jumbotron>
+                </Container>
+                <Container>
+                <Jumbotron>
+                    <Button block onClick={this.onClickViewAppointment} size='lg' variant='dark'>Appointment Details</Button>{this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Jumbotron>
+                </Container>
+            </Container>
         )
     }
 }
@@ -182,20 +212,31 @@ export{
 
 function DisplayPatientData(props) {
     if(props.user[0]){
+        console.log(props);
+        
         return (
-            <div>
-                <h2>aadhaar: {props.user[0].aadhaar_id}</h2>
-                <h2>Name: {props.user[0].name}</h2>
-            </div>
+            <Card>
+                <Card.Body>
+                    <blockquote className="blockquote mb-0">
+                        <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
+                        <h4>Name: {props.user[0].name}</h4>
+                        <h4>Age: {props.user[0].age}</h4>
+                        <h4>BMI: {props.user[0].bmi}</h4>
+                        <h4>Last checkup date: {props.user[0].last_checkup_date ? <>{props.user[0].last_checkup_date.substring(0, 10)}</>: null}</h4>
+                        <h4>Spo2: {props.user[0].spo2}</h4>
+                        <h4>Comorbidity: {props.user[0].comorbidity}</h4>
+                    </blockquote>
+                </Card.Body>
+            </Card>
         );
     }
     else{
         return(
-            <div>
-                <h2>
-                    Patient record not found.
-                </h2>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h2>Nothing To Show</h2>
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -217,7 +258,7 @@ class DisplayAppointments extends Component {
         
         console.log(userObject)
 
-        axios.post('http://localhost:5000/appointment/confirmstatus', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/confirmstatus`, userObject)
         .then((res) => {
 
             console.log(res.data);
@@ -230,19 +271,24 @@ class DisplayAppointments extends Component {
     }
 
     render(){
-        if(this.props.user.length == 0){
+        if(this.props.user.length === 0){
             return(
-                <div>
-                    No appointements pending or scheduled.
-                </div>
+                <Container>
+                    <Jumbotron>
+                        <h3>No appointements Pending Or Scheduled.</h3>
+                    </Jumbotron>
+                </Container>
             )
         }
         const listItems = this.props.user.map((i) => 
-            <div key={i.slot}>
-                <h3>{i.aadhaar_id}</h3>
-                <h3>{i.slot}</h3>
-                <h3>{i.status ? "Confirmed": <button onClick={(e) => this.onClickConfirm(i, e)}>Confirm appointment </button>}</h3>
-            </div>);
+        <Card style={{ width: '18rem'}}>
+            <Card.Body>
+                <Card.Title>{i.slot}</Card.Title>
+                <Card.Text> {i.aadhaar_id} </Card.Text>
+                {i.status ? <Button variant='warning'>Confirmed</Button>: <Button variant="success" onClick={(e) => this.onClickConfirm(i, e)}>Confirm Appointment </Button>}
+            </Card.Body>
+        </Card>
+            );
         return(
             <div>
                 {listItems}

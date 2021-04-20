@@ -214,7 +214,7 @@ router.post(
           user.temperature = await temperature;
           user.pulse_rate = await pulse_rate;
           user.comorbidity = await comorbidity;
-          user.bmi = (user.weight/user.height)*10000;
+          user.bmi = (user.weight/user.height**2)*10000;
 
           await user.save();
 
@@ -272,7 +272,7 @@ router.post(
           user.temperature = await temperature;
           user.pulse_rate = await pulse_rate;
           user.comorbidity = await comorbidity;
-          user.bmi = (user.weight/user.height)*10000;
+          user.bmi = (user.weight/user.height**2)*10000;
 
           await user.save();
 
@@ -293,6 +293,21 @@ router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const user = await Citizen.findById(req.citizen.id);
+    res.json(user);
+  } catch (e) {
+    res.send({ message: "Error in Fetching user"});
+  }
+});
+
+router.get("/viewstats", async (req, res) => {
+  try {
+  
+    const user = await Citizen.find();
+    if (!user) {
+          return res.status(400).json({
+              message: "Citizen not Found"
+          });
+      }
     res.json(user);
   } catch (e) {
     res.send({ message: "Error in Fetching user"});

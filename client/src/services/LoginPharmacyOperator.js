@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {Redirect, Link,} from 'react-router-dom';
+import {
+    Form,
+    Button,
+    Jumbotron,
+    Container,
+    Card,
+    CardDeck
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const REDIRECT_PATH_LOGIN = 'pharmacyoperator/dashboard'
+
+
 
 class PharmacyOperatorLogin extends Component{
     constructor(props) {
@@ -37,7 +52,7 @@ class PharmacyOperatorLogin extends Component{
         sessionStorage.setItem('aadhaar_id_pharmacy', this.state.aadhaar_id)
         console.log(userObject)
 
-        axios.post('http://localhost:5000/operator/pharmacylogin', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/pharmacylogin`, userObject)
         .then((res) => {
             console.log(res.data.token)
 
@@ -54,6 +69,7 @@ class PharmacyOperatorLogin extends Component{
         
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid credentials')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -71,19 +87,29 @@ class PharmacyOperatorLogin extends Component{
             redirection_html = "";
         }
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="aadhaar_id">Aadhaar:</label><br/>
-                    <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar} Min="100000000000"/><br/>
-                    <label for="password">Password:</label><br/>
-                    <input type="password" onChange={this.onChangePassword} value={this.state.password}/><br/>
-                    <br/>
-                    <input type="submit" value="Submit"/>
-                </form>
+            <Container>
+                <Jumbotron>
+                    <h2>Login As Pharmacy Operator</h2>
+                    <Form onSubmit={this.onSubmit.bind(this)}>
+
+                        <Form.Group>
+                            <Form.Label>Aadhar ID</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <ToastContainer/>
+                    </Form>
+                </Jumbotron>
                 {redirection_html}
-                
-            </div> 
-            
+            </Container> 
         )
     }
 }
@@ -128,7 +154,7 @@ class PharmacyOperatorDashboard extends Component{
 
     componentDidMount(){
         let aadhaar_id = sessionStorage.getItem('aadhaar_id_pharmacy')
-        axios.get('http://localhost:5000/operator/pharmacyme', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/pharmacyme`, {
             headers:{
                 'aadhaar_id': aadhaar_id
             }
@@ -145,14 +171,15 @@ class PharmacyOperatorDashboard extends Component{
 
     render(){
         return(
-            <div>
-                <Link onClick={this.onClickAddStocks}>Add stocks</Link><br></br>
-                {this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickShowStocks}>Show stocks</Link><br></br>
-                {this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
-                <Link onClick={this.onClickUpdateStocks}>Update and Delete stocks</Link><br></br>
-                {this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
-            </div>
+            <Container>
+                <Jumbotron>
+                    <h3>Pharmacy Operator Dashboard</h3><hr></hr>
+                    <Button block onClick={this.onClickAddStocks} size='lg' variant='primary'>Add Stocks</Button>{this.state.showAddStock ? <AddStock user={this.state.operatorInfo} />: null}
+                    <Button block onClick={this.onClickShowStocks} size='lg' variant='warning'>Show Stocks</Button>{this.state.showShowStock ? <ShowStock user={this.state.operatorInfo} />: null}
+                    <Button block onClick={this.onClickUpdateStocks} size='lg' variant='success'>Update Or Delete Stocks</Button>{this.state.showUpdateStock ? <UpdateStock user={this.state.operatorInfo} />: null}
+                    <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                </Jumbotron>
+            </Container>
         )
     }
 }
@@ -203,12 +230,13 @@ class AddStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/addstock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/addstock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('New stock added')
         }).catch((error) => {
             console.log(error)
+            toast.success('Invalid details')
         });
 
         this.setState({
@@ -221,18 +249,27 @@ class AddStock extends Component{
     }
     render(){
         return(
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label for="drug_name">Drug name:</label><br/>
-                    <input type="string" value={this.state.drug_name} onChange={this.onChangeDrugName}/><br/>
-                    <label for="expiry_date">Expiry_date:</label><br/>
-                    <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate}/><br/>
-                    <label for="quantity">quantity:</label><br/>
-                    <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
-                    <br></br>
-                    <input type="submit" value="Submit"/>
-                </form>
-            </div>
+            <Form onSubmit={this.onSubmit.bind(this)}>
+                <Form.Group>
+                    <Form.Label>Drug Name</Form.Label>
+                    <Form.Control required type="text" placeholder="Enter Drug Name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)} />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>Expiry Date</Form.Label>
+                    <Form.Control required type="date" placeholder="Enter Expiry Date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)} />
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Label>Quantity</Form.Label>
+                    <Form.Control required type="number" placeholder="Enter Quantity" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)} />
+                </Form.Group>
+                
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+                <ToastContainer/>
+            </Form>
         )
     }
 }
@@ -248,7 +285,7 @@ class ShowStock extends Component{
 
     componentDidMount(){
         let store_id = sessionStorage.getItem('store_id')
-        axios.get('http://localhost:5000/stock/showstock', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/showstock`, {
             headers:{
                 'store_id': store_id
             }
@@ -266,17 +303,23 @@ class ShowStock extends Component{
         const info = []
         for (let i = 0; i < this.state.stocksInfo.length; i++) {
             info.push(
-                <ul>
-                    <li>{this.state.stocksInfo[i].drug_name}</li>
-                    <li>{this.state.stocksInfo[i].expiry_date}</li>
-                    <li>{this.state.stocksInfo[i].quantity}</li>
-                </ul>
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{this.state.stocksInfo[i].drug_name}</Card.Title>
+                        <Card.Text>
+                            Expiry Date: {this.state.stocksInfo[i].expiry_date}
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Footer>
+                        Quantity: {this.state.stocksInfo[i].quantity}
+                    </Card.Footer>
+                </Card>
             )
         }
         return(
-            <div>
+            <CardDeck>
                 {info}
-            </div>
+            </CardDeck>
         )
     }
 }
@@ -300,7 +343,7 @@ class UpdateStock extends Component{
 
     componentDidMount(){
         let store_id = sessionStorage.getItem('store_id')
-        axios.get('http://localhost:5000/stock/showstock', {
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/showstock`, {
             headers:{
                 'store_id': store_id
             }
@@ -340,12 +383,13 @@ class UpdateStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/updatestock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/updatestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Stock updated')
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid details')
         });
 
         this.setState({
@@ -366,12 +410,13 @@ class UpdateStock extends Component{
             quantity:this.state.quantity,
         }
         console.log(userObject)
-        axios.post('http://localhost:5000/stock/deletestock', userObject)
+        axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/deletestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Stock Deleted')
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid details')
         });
 
         this.setState({
@@ -390,20 +435,35 @@ class UpdateStock extends Component{
                 </option>
             )
         }
+        if(info.length === 0){
+            info.push(<option>Stock Empty</option>)
+        }
+        
         return(
-            <div>
-                <label for="drug_name">Select drug_name:</label><br/>
-                <select name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName}>
-                    {info}
-                </select><br/>
-                <label for="expiry_date">Expiry_date:</label><br/>
-                <input type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate}/><br/>
-                <label for="quantity">quantity:</label><br/>
-                <input type="number" value={this.state.quantity} onChange={this.onChangeQuantity}/><br/>
-                <br></br>
-                <Link onClick={this.onClickUpdate}>Update</Link><br></br>
-                <Link onClick={this.onClickDelete}>Delete</Link><br></br>
-            </div>
+            <Container>
+                <Jumbotron>
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Label>Select Drug Name</Form.Label>
+                        <Form.Control as="select" name="drug_name" id="drug_name" value={this.state.drug_name} onChange={this.onChangeDrugName.bind(this)}>
+                            {info}
+                        </Form.Control>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Expiry Date</Form.Label>
+                        <Form.Control required type="date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)}/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control required type="number" placeholder="Enter Quantity" value={this.state.quantity} onChange={this.onChangeQuantity.bind(this)}/>
+                    </Form.Group>
+
+                    <Button onClick={this.onClickUpdate} variant="success">Update</Button>{' '}
+                    <Button onClick={this.onClickDelete} variant="danger">Delete</Button>
+                    <ToastContainer/>
+                </Jumbotron>
+            </Container>
         )
     }
 }
