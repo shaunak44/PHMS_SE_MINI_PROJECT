@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import emailjs from 'emailjs-com';
 
 const REDIRECT_PATH_LOGIN = 'doctor/dashboard'
 
@@ -247,6 +248,7 @@ class DisplayAppointments extends Component {
         this.onClickConfirm = this.onClickConfirm.bind(this);
     }
 
+
     onClickConfirm(i, e){
         e.preventDefault()
         console.log(i)
@@ -260,9 +262,20 @@ class DisplayAppointments extends Component {
 
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/confirmstatus`, userObject)
         .then((res) => {
-
             console.log(res.data);
-            
+
+            var templateParams = {
+                to_email: res.data.user[0].email_id,
+                to_name: res.data.user[0].name,
+                message:'Your appointment is confirmed.'
+            };
+            emailjs.send('service_nsema9w', 'template_a1xy8li', templateParams, 'user_vHmTSugteuDoVDXBeI5sc')
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                toast.success('Mail sent to Patient')
+            }, function(error) {
+                console.log('FAILED...', error);
+            });
         
         }).catch((error) => {
             console.log(error)

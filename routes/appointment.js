@@ -3,6 +3,7 @@ const { check, validationResult} = require("express-validator");
 const router = express.Router();
 const Doctor = require("../models/Doctor");
 const Appointment = require("../models/Appointment");
+const Citizen = require("../models/Citizen");
 
 router.post(
     "/book",
@@ -146,7 +147,7 @@ router.post(
         
         try {
             
-            user = await Appointment.findOne({
+            let user = await Appointment.findOne({
                 aadhaar_id, doctor_id, slot
             });
 
@@ -157,9 +158,13 @@ router.post(
             }
             user.status = true;
             user.save()
+            user = await Citizen.find({
+                aadhaar_id
+            })
   
             res.status(200).json({
-              message: "confirmed sucessfully",
+              message: "confirmed sucessfully1",
+              user: user
             });
             
         } catch (err) {
