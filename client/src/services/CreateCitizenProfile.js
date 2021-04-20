@@ -296,9 +296,11 @@ class BookAppointment extends Component{
         super(props)
         this.onSchedule = this.onSchedule.bind(this);
         this.onChangeDoctorId = this.onChangeDoctorId.bind(this);
+        
         this.state = {
             citizenInfo: [],
-            doctor_id:''
+            doctor_id:'',
+            doctorInfo: [],
         }
     }
 
@@ -313,7 +315,6 @@ class BookAppointment extends Component{
         .then((res) => {
             console.log(res.data.message)
             toast.success('Sucessfully Booked')
-
         }).catch((error) => {
             console.log(error)
             toast.error('Not available slots')
@@ -321,7 +322,7 @@ class BookAppointment extends Component{
         });
 
         this.setState({
-            doctor_id:'',
+            doctor_id:this.state.doctorInfo[0].doctor_id,
         });
     }
 
@@ -337,16 +338,42 @@ class BookAppointment extends Component{
                 'token': data
             }
         })
-            .then(res => {
-                this.setState({ citizenInfo: res.data });
-                console.log(this.state.citizenInfo)
+        .then(res => {
+            this.setState({ citizenInfo: res.data });
+            console.log(this.state.citizenInfo)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
+        axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/getdoctorinfo`, {
+           
+        })
+        .then(res => {
+            this.setState({ doctorInfo: res.data });
+            console.log(this.state.doctorInfo)
+            this.setState({
+                doctor_id: this.state.doctorInfo[0].doctor_id,
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+
     }
 
     render(){
+        const info = []
+        for (let i = 0; i < this.state.doctorInfo.length; i++) {
+            info.push(
+                <option value= {this.state.doctorInfo[i].doctor_id}>
+                    {this.state.doctorInfo[i].doctor_id} Specialized in {this.state.doctorInfo[i].specialization}
+                </option>
+            )
+        }
+        if(info.length === 0){
+            info.push(<option>Stock Empty</option>)
+        }
         return(
             <Container>
                 <Jumbotron>
@@ -354,9 +381,11 @@ class BookAppointment extends Component{
 
                     <Form.Group>
                         <Form.Label>Doctor ID</Form.Label>
-                        <Form.Control required type="number" placeholder="Enter Doctor ID" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)} />
+                        <Form.Control as="select" required type="number" placeholder="Enter Doctor ID" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)} >
+                            {info}
+                        </Form.Control>
                     </Form.Group>
-                    <DayTimePicker bg='primary' timeSlotSizeMinutes={30} onConfirm={this.onSchedule}/>
+                    <DayTimePicker bg='primary' timeSlotSizeMinutes={30} onConfirm={this.onSchedule} />
                     <ToastContainer/>
                 </Jumbotron>
             </Container>

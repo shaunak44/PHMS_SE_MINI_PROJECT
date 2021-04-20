@@ -55,6 +55,15 @@ router.post(
                         message: "Hospital Not registered"
                     }); 
                 }
+                user = await HospitalOperator.findOne({
+                    aadhaar_id
+                })
+                if(user){
+                    return res.status(400).json({
+                        message: "Already registred"
+                    }); 
+                }   
+
                 user = new HospitalOperator({
                     aadhaar_id,
                     hospital_id
@@ -75,6 +84,15 @@ router.post(
                         message: "Pharmacy Not registered"
                     }); 
                 }
+                user = await PharmacyOperator.findOne({
+                    aadhaar_id
+                })
+                if(user){
+                    return res.status(400).json({
+                        message: "Already registred"
+                    }); 
+                }   
+
                 user = new PharmacyOperator({
                     aadhaar_id,
                     store_id

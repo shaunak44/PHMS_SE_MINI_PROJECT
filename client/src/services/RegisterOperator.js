@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     Form,
     Button,
@@ -50,9 +52,11 @@ export default class OperatorRegister extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/operator/registeroperator`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Registartion Sucessful')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Already registered or invalid details')
         });
 
         this.setState({
@@ -90,24 +94,10 @@ export default class OperatorRegister extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="operator_type">operator_type:</label><br/>
-            //         <select id="operator_type"  value={this.state.operator_type} onChange={this.onChangeOperatorType}>
-            //             <option value="hospital_operator">Hospital operator</option>
-            //             <option value="pharmacy_operator">Pharmacy operator</option>
-            //         </select><br/>
-            //         <label for="aadhaar">Aadhaar Number:</label><br/>
-            //         <input type="string" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId}/><br/>
-            //         <label for="store_id">Store ID/ Hospital ID:</label><br/>
-            //         <input type="number" value={this.state.store_id} onChange={this.onChangeStoreId} /><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form> 
-            // </div>
         )
     }
 }

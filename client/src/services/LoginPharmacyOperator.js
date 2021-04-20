@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {Redirect, Link,} from 'react-router-dom';
 import {
     Form,
@@ -11,7 +14,10 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const REDIRECT_PATH_LOGIN = 'pharmacyoperator/dashboard'
+
+
 
 class PharmacyOperatorLogin extends Component{
     constructor(props) {
@@ -63,6 +69,7 @@ class PharmacyOperatorLogin extends Component{
         
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid credentials')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -98,6 +105,7 @@ class PharmacyOperatorLogin extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
                 {redirection_html}
@@ -225,9 +233,10 @@ class AddStock extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/addstock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('New stock added')
         }).catch((error) => {
             console.log(error)
+            toast.success('Invalid details')
         });
 
         this.setState({
@@ -259,6 +268,7 @@ class AddStock extends Component{
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
+                <ToastContainer/>
             </Form>
         )
     }
@@ -376,9 +386,10 @@ class UpdateStock extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/updatestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Stock updated')
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid details')
         });
 
         this.setState({
@@ -402,9 +413,10 @@ class UpdateStock extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/stock/deletestock`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Stock Deleted')
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid details')
         });
 
         this.setState({
@@ -449,6 +461,7 @@ class UpdateStock extends Component{
 
                     <Button onClick={this.onClickUpdate} variant="success">Update</Button>{' '}
                     <Button onClick={this.onClickDelete} variant="danger">Delete</Button>
+                    <ToastContainer/>
                 </Jumbotron>
             </Container>
         )

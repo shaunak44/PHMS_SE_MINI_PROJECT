@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     Form,
     Button,
@@ -70,9 +72,11 @@ export default class PharmacyRegister extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/pharmacy/registerpharmacy`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Registration Sucessful')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Already registered or Invalid details')
         });
 
         this.setState({
@@ -124,6 +128,7 @@ export default class PharmacyRegister extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
             </Container> 

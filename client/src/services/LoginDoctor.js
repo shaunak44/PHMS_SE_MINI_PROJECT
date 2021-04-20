@@ -12,6 +12,9 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const REDIRECT_PATH_LOGIN = 'doctor/dashboard'
 
 class DoctorLogin extends Component{
@@ -52,15 +55,11 @@ class DoctorLogin extends Component{
 
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/login`, userObject)
         .then((res) => {
-
             // Save data to sessionStorage
-            
-
             this.setState({redirect_flag: true}) 
-            
-        
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid creds')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -96,6 +95,7 @@ class DoctorLogin extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
                 {redirection_html}
@@ -126,6 +126,7 @@ class DoctorDashboard extends Component{
 
     onClickViewPatientProfile(e) {
         e.preventDefault();
+        this.setState({showData:false})
         console.log(this.state.aadhaar_id)
         axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/viewpatient`, {
             headers:{
@@ -219,6 +220,11 @@ function DisplayPatientData(props) {
                     <blockquote className="blockquote mb-0">
                         <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
                         <h4>Name: {props.user[0].name}</h4>
+                        <h4>Age: {props.user[0].age}</h4>
+                        <h4>BMI: {props.user[0].bmi}</h4>
+                        <h4>Last checkup date: {props.user[0].last_checkup_date ? <>{props.user[0].last_checkup_date.substring(0, 10)}</>: null}</h4>
+                        <h4>Spo2: {props.user[0].spo2}</h4>
+                        <h4>Comorbidity: {props.user[0].comorbidity}</h4>
                     </blockquote>
                 </Card.Body>
             </Card>

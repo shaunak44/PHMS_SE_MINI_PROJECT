@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     Form,
     Button,
@@ -55,9 +57,11 @@ export default class DoctorRegister extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/doctor/registerdoctor`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Registration sucessful')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Already registred or invalid creds')
         });
 
         this.setState({
@@ -98,23 +102,11 @@ export default class DoctorRegister extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="hospital_id">hospital_id:</label><br/>
-            //         <input type="number" value={this.state.hospital_id} onChange={this.onChangeHospitalId}/><br/>
-            //         <label for="doctor_id">DoctorId:</label><br/>
-            //         <input type="number" value={this.state.doctor_id} onChange={this.onChangeDoctorId}/><br/>
-            //         <label for="aadhaar_id">Aadhaar:</label><br/>
-            //         <input type="number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaarId} /><br/>
-            //         <label for="specialization">specialization:</label><br/>
-            //         <input type="string" value={this.state.specialization} onChange={this.onChangeSpecialization} /><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form> 
-            // </div>
+           
         )
     }
 }

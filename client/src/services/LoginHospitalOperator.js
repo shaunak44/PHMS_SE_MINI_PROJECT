@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Redirect, Link,} from 'react-router-dom';
 import {
     Form,
@@ -11,6 +13,8 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const REDIRECT_PATH_LOGIN = 'hospitaloperator/dashboard'
+
+
 
 class HospitalOperatorLogin extends Component{
     constructor(props) {
@@ -62,6 +66,7 @@ class HospitalOperatorLogin extends Component{
         
         }).catch((error) => {
             console.log(error)
+            toast.error('Invalid creds')
         });
 
         this.setState({ aadhaar_id: '', password: '', redirect_flag: false});
@@ -97,6 +102,7 @@ class HospitalOperatorLogin extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
                 {redirection_html}
@@ -260,9 +266,10 @@ class UpdateData extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/citizen/updateinfo`, userObject)
         .then((res) => {
             console.log(res.data.message)
-
+            toast.success('Updated sucessfully')
         }).catch((error) => {
             console.log(error)
+            toast.success('Invalid details')
         });
 
         this.setState({
@@ -315,6 +322,7 @@ class UpdateData extends Component{
                         Update
                     </Button>
 
+                    <ToastContainer/>
 
                 </Jumbotron>
             </Container>
@@ -330,6 +338,11 @@ function DisplayPatientData(props) {
                     <blockquote className="blockquote mb-0">
                         <h4>Aadhaar: {props.user[0].aadhaar_id}</h4>
                         <h4>Name: {props.user[0].name}</h4>
+                        <h4>Age: {props.user[0].age}</h4>
+                        <h4>BMI: {props.user[0].bmi}</h4>
+                        <h4>Last checkup date: {props.user[0].last_checkup_date ? <>{props.user[0].last_checkup_date.substring(0, 10)}</>: null}</h4>
+                        <h4>Spo2: {props.user[0].spo2}</h4>
+                        <h4>Comorbidity: {props.user[0].comorbidity}</h4>
                     </blockquote>
                 </Card.Body>
             </Card>

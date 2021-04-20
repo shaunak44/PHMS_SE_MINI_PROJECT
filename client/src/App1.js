@@ -46,7 +46,7 @@ function App1() {
           <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
 
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/signup">Register</Nav.Link>
+            <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
             
             <NavDropdown title="Login" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/login" >Citizen</NavDropdown.Item>

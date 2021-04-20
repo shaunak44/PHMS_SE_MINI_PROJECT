@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     Form,
     Button,
@@ -7,6 +9,7 @@ import {
     Container
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export default class HospitalRegister extends Component{
     constructor(props) {
@@ -70,9 +73,11 @@ export default class HospitalRegister extends Component{
         axios.post(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/hospital/registerhospital`, userObject)
         .then((res) => {
             console.log(res.data.message)
+            toast.success('Registration Sucessful')
 
         }).catch((error) => {
             console.log(error)
+            toast.error('Already registred or Invalid Details')
         });
 
         this.setState({
@@ -124,27 +129,11 @@ export default class HospitalRegister extends Component{
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>
+                        <ToastContainer/>
                     </Form>
                 </Jumbotron>
             </Container> 
-            // <div>
-            //     <form onSubmit={this.onSubmit.bind(this)}>
-            //         <label for="hospital_id">hospital_id:</label><br/>
-            //         <input type="string" value={this.state.hospital_id} onChange={this.onChangeHospitalId}/><br/>
-            //         <label for="name">Name:</label><br/>
-            //         <input type="string" value={this.state.name} onChange={this.onChangeName}/><br/>
-            //         <label for="phoneNo">Phone Number:</label><br/>
-            //         <input type="number" value={this.state.phone_number} onChange={this.onChangePhoneNumber} /><br/>
-            //         <label for="beds">Number of Beds:</label><br/>
-            //         <input type="number" value={this.state.no_of_beds} onChange={this.onChangeNoOfBeds} /><br/>
-            //         <label for="address">address:</label><br/>
-            //         <input type="string" value={this.state.address} onChange={this.onChangeAddress} /><br/>
-            //         <label for="type">Type:</label><br/>
-            //         <input type="string" value={this.state.type} onChange={this.onChangeType} /><br/>
-            //         <br/>
-            //         <input type="submit" value="Submit"/>
-            //     </form> 
-            // </div>
+           
         )
     }
 }

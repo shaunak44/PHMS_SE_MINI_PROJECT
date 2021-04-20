@@ -49,6 +49,19 @@ router.post(
                     message: "hospital not registered"
                 });
             }
+
+            user = await Doctor.findOne({
+                doctor_id
+            });
+            var user1 = await Doctor.findOne({
+                aadhaar_id
+            });
+            if (user || user1) {
+                return res.status(400).json({
+                    message: "Already registered"
+                });
+            }
+
             user = new Doctor({
                 doctor_id,
                 aadhaar_id,
@@ -153,6 +166,20 @@ router.post(
     try {
       const aadhaar_id = req.header("aadhaar_id")
       const user = await Doctor.find({aadhaar_id});
+      if (!user) {
+            return res.status(400).json({
+                message: "Doctor not Found"
+            });
+        }
+      res.json(user);
+    } catch (e) {
+      res.send({ message: "Error in Fetching user"});
+    }
+  });
+
+  router.get("/getdoctorinfo", async (req, res) => {
+    try {
+      const user = await Doctor.find();
       if (!user) {
             return res.status(400).json({
                 message: "Doctor not Found"
