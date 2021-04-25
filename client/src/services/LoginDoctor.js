@@ -199,6 +199,7 @@ class DoctorDashboard extends Component{
                     <Button block onClick={this.onClickViewAppointment} size='lg' variant='dark'>Appointment Details</Button>{this.state.showAppointment? <DisplayAppointments user={this.state.appointmentCollection}/>: null}
                     <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
                 </Jumbotron>
+                <ToastContainer/>
                 </Container>
             </Container>
         )

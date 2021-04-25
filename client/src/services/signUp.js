@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import validator from 'validator'
 
 export default class SignUp extends Component{
     constructor(props) {
@@ -23,7 +24,8 @@ export default class SignUp extends Component{
         this.state = {
             aadhaar_id: '',
             email_id: '',
-            password: ''
+            password: '',
+            errorPassword:'',
         }
     }
 
@@ -39,13 +41,26 @@ export default class SignUp extends Component{
 
     onChangePassword(e){
         console.log(e.target.value);
-        this.setState({password: e.target.value})
+        if (validator.isStrongPassword(e.target.value, {
+            minLength: 8, minLowercase: 1,
+            minUppercase: 1, minNumbers: 1, minSymbols: 1
+          })) {
+            this.setState({errorPassword: "Strong Password"})  
+          } else {
+            this.setState({errorPassword: "Week Password"})  
+          }
+          this.setState({password: e.target.value})
     }
 
     onSubmit(e){
 
         console.log(e);
-        e.preventDefault()
+        e.preventDefault();
+
+        if(this.state.errorPassword == "Week Password"){
+            toast('Week password')
+            return;
+        }
 
         const userObject = {
             aadhaar_id : this.state.aadhaar_id,
@@ -87,7 +102,7 @@ export default class SignUp extends Component{
 
                         <Form.Group>
                             <Form.Label>Aadhar ID</Form.Label>
-                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" />
+                            <Form.Control required type="number" placeholder="Enter Aadhar Number" value={this.state.aadhaar_id} onChange={this.onChangeAadhaar.bind(this)} Min="100000000000" Max="999999999999"/>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicEmail">
@@ -101,6 +116,9 @@ export default class SignUp extends Component{
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
                             <Form.Control required onChange={this.onChangePassword.bind(this)} value={this.state.password} type="password" placeholder="Password" />
+                            <Form.Text className="text-muted">
+                            {this.state.errorPassword}
+                            </Form.Text>    
                         </Form.Group>
 
                         <Button variant="primary" type="submit">
