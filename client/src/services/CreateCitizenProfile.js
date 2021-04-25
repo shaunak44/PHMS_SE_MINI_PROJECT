@@ -12,6 +12,11 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import "./customDatePickerWidth.css";
+
  
 class CreateCitizenProfile extends Component{
     constructor(props) {
@@ -296,18 +301,22 @@ class BookAppointment extends Component{
         super(props)
         this.onSchedule = this.onSchedule.bind(this);
         this.onChangeDoctorId = this.onChangeDoctorId.bind(this);
-        
+        this.onChangeStartDate = this.onChangeStartDate.bind(this);
+
         this.state = {
             citizenInfo: [],
             doctor_id:'',
             doctorInfo: [],
+            startDate:'',
+            excludedSlots:[new Date("Sun Apr 25 2021 01:30:00 GMT+0530 (India Standard Time)"), ],
+            BookedSlots:[],
         }
     }
 
-    onSchedule(dateTime){
+    onSchedule(e){
         const userObject = {
             doctor_id: this.state.doctor_id,
-            slot: String(dateTime),
+            slot: this.state.startDate,
             aadhaar_id: this.state.citizenInfo.aadhaar_id,
         };
         console.log(userObject)
@@ -318,16 +327,32 @@ class BookAppointment extends Component{
         }).catch((error) => {
             console.log(error)
             toast.error('Not available slots')
-
-        });
-
-        this.setState({
-            doctor_id:this.state.doctorInfo[0].doctor_id,
         });
     }
 
-    onChangeDoctorId(e){
-        this.setState({doctor_id: e.target.value})
+    async onChangeDoctorId(e){
+        //console.log(e.target.value)
+        await axios.get(`http://localhost:${process.env.REACT_APP_SERVER_PORT}/appointment/doctorappointmentinfo`, {
+            headers:{
+                'doctor_id': e.target.value
+            }
+        })
+        .then(res => {
+            this.setState({doctor_id: e.target.value})
+            this.setState({ BookedSlots: res.data });
+            this.setState({ excludedSlots: [] });
+            for(let i = 0; i < this.state.BookedSlots.length; i++){
+                this.state.excludedSlots.push(new Date(this.state.BookedSlots[i].slot))
+            }
+            console.log(this.state.BookedSlots)
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    onChangeStartDate(date){
+        this.setState({startDate: date})
     }
 
     componentDidMount() {
@@ -352,9 +377,13 @@ class BookAppointment extends Component{
         .then(res => {
             this.setState({ doctorInfo: res.data });
             console.log(this.state.doctorInfo)
-            this.setState({
+            /*this.setState({
                 doctor_id: this.state.doctorInfo[0].doctor_id,
-            })
+            })*/
+            /*this.setState({
+                doctor_id: '',
+            })*/
+            
         })
         .catch(function (error) {
             console.log(error);
@@ -372,20 +401,36 @@ class BookAppointment extends Component{
             )
         }
         if(info.length === 0){
-            info.push(<option>Stock Empty</option>)
+            info.push(<option>No available</option>)
         }
         return(
             <Container>
                 <Jumbotron>
                     <h1>Book an appointment.</h1><hr/>
-
                     <Form.Group>
                         <Form.Label>Doctor ID</Form.Label>
-                        <Form.Control as="select" required type="number" placeholder="Enter Doctor ID" value={this.state.doctor_id} onChange={this.onChangeDoctorId.bind(this)} >
+                        <Form.Control as="select" required type="number" placeholder="Enter Doctor ID" onChange={this.onChangeDoctorId.bind(this)} >
+                            <option disabled selected value> -- select an option -- </option>
                             {info}
                         </Form.Control>
                     </Form.Group>
-                    <DayTimePicker bg='primary' timeSlotSizeMinutes={30} onConfirm={this.onSchedule} />
+                    <center>
+                    <div className="customDatePickerWidth">
+                        <DatePicker
+                        selected={ this.state.startDate }
+                        onChange={ this.onChangeStartDate }
+                        showTimeSelect
+                        name="startDate"
+                        timeIntervals={30}
+                        timeCaption="time"
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        className="form-control"
+                        minDate={new Date()}
+                        excludeTimes={this.state.excludedSlots}
+                    />
+                    </div>
+                    </center><br></br><br></br>
+                    <Button block onClick={this.onSchedule} size='lg' variant='dark'>Schedule</Button>
                     <ToastContainer/>
                 </Jumbotron>
             </Container>

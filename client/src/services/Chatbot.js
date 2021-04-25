@@ -38,7 +38,6 @@ export default class Chatbot extends Component{
                     <Form.Group>
                         <Form.Control id="userbox" type="text" onKeyDown={this.talk} placeholder="Ask Your Queries" />
                     </Form.Group>
-                    {/* <input id="userbox" type="text" onKeyDown={this.talk}></input> */}
                     <h3>Hello I am CHABOT, Ask me your queries !</h3>
                 </Jumbotron>
             </Container>

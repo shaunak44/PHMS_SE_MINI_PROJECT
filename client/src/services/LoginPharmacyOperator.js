@@ -13,6 +13,8 @@ import {
     CardDeck
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import moment from 'moment';
+
 
 
 const REDIRECT_PATH_LOGIN = 'pharmacyoperator/dashboard'
@@ -257,7 +259,7 @@ class AddStock extends Component{
 
                 <Form.Group>
                     <Form.Label>Expiry Date</Form.Label>
-                    <Form.Control required type="date" placeholder="Enter Expiry Date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)} />
+                    <Form.Control required type="date" placeholder="Enter Expiry Date" value={this.state.expiry_date} onChange={this.onChangeExpiryDate.bind(this)} min={moment().format("YYYY-MM-DD")} />
                 </Form.Group>
 
                 <Form.Group>
@@ -302,12 +304,14 @@ class ShowStock extends Component{
     render(){
         const info = []
         for (let i = 0; i < this.state.stocksInfo.length; i++) {
+            var d = new Date(this.state.stocksInfo[i].expiry_date);
+            d = String(d); 
             info.push(
                 <Card>
                     <Card.Body>
                         <Card.Title>{this.state.stocksInfo[i].drug_name}</Card.Title>
                         <Card.Text>
-                            Expiry Date: {this.state.stocksInfo[i].expiry_date}
+                            Expiry Date: {d}
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>
