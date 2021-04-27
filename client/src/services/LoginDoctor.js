@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Redirect, Link,} from 'react-router-dom';
-import { selectFields } from 'express-validator/src/select-fields';
-import { compare } from 'bcryptjs';
+import {Redirect,} from 'react-router-dom';
 import {
     Form,
     Button,

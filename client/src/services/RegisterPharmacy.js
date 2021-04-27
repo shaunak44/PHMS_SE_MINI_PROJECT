@@ -32,7 +32,8 @@ export default class PharmacyRegister extends Component{
             opening_time:'',
             phone_number:'',
             address:'',
-            closing_time:''
+            closing_time:'',
+            pincode:''
         };
     }
 
@@ -53,13 +54,16 @@ export default class PharmacyRegister extends Component{
     onChangeAddress(e){
         this.setState({address: e.target.value})
     }
+    onChangePincode(e){
+        this.setState({pincode: e.target.value})
+    }
     onChangeClosingTime(e){
         this.setState({closing_time: e.target.value})
     }
 
     onSubmit(e){
         e.preventDefault()
-
+        this.state.address += ("-"+this.state.pincode)
         const userObject = {
             store_id: this.state.store_id,
             name : this.state.name,
@@ -123,6 +127,11 @@ export default class PharmacyRegister extends Component{
                         <Form.Group>
                             <Form.Label>Address:</Form.Label>
                             <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}  />
+                        </Form.Group> 
+
+                        <Form.Group>
+                            <Form.Label>Pincode:</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Pincode" value={this.state.pincode} onChange={this.onChangePincode.bind(this)} min="100000" max="999999"/>
                         </Form.Group>                
 
                         <Button variant="primary" type="submit">

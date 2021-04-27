@@ -3,8 +3,6 @@ import axios from 'axios';
 import {
     Container,
     Button,
-    ButtonGroup,
-    ButtonToolbar
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

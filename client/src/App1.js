@@ -31,6 +31,8 @@ import DoctorRegister from './services/RegisterDoctor'
 import {CreateCitizenProfile, ViewCitizenInfo, BookAppointment, CheckAppointment} from "./services/CreateCitizenProfile";
 import FaqPage from './services/FAQ'
 import {AgePie, BmiPie, BedsBar, CheckupPie} from './services/Analysis'
+import {HospitalLocator, PharmacyLocator} from './services/Locator'
+
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -74,6 +76,13 @@ function App1() {
               <NavDropdown.Item as={Link} to="/bedsbar" >Beds</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/checkuppie" >Last Checkup</NavDropdown.Item>
             </NavDropdown>
+
+            <NavDropdown title="Locator" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/Hospitallocator" >Hospital Locator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/Pharmacylocator" >Pharmacy Locator</NavDropdown.Item>
+            </NavDropdown>
+
+            
 
           </Nav>
 
@@ -158,6 +167,12 @@ function App1() {
           </Route>
           <Route exact path="/checkuppie">
             <CheckupPie />
+          </Route>
+          <Route exact path="/hospitallocator">
+            <HospitalLocator />
+          </Route>
+          <Route exact path="/pharmacylocator">
+            <PharmacyLocator />
           </Route>
         </Switch>
       </div>

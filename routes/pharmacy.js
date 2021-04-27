@@ -74,4 +74,18 @@ router.post(
     }
   );
 
+  router.get("/getinfo", async (req, res) => {
+    try {
+        const hosp = await Pharmacy.find();
+        if (!hosp) {
+            return res.status(400).json({
+                message: "Pharmacy not Found"
+            });
+        }
+        res.json(hosp);
+    } catch (e) {
+        res.send({ message: "Error in Fetching Phar"});
+    }
+});
+
   module.exports = router;

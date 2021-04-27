@@ -34,7 +34,8 @@ export default class HospitalRegister extends Component{
             no_of_beds:'',
             phone_number:'',
             address:'',
-            type:''
+            type:'',
+            pincode:'',
         };
     }
 
@@ -54,12 +55,16 @@ export default class HospitalRegister extends Component{
     onChangeAddress(e){
         this.setState({address: e.target.value})
     }
+    onChangePincode(e){
+        this.setState({pincode: e.target.value})
+    }
     onChangeType(e){
         this.setState({type: e.target.value})
     }
 
     onSubmit(e){
         e.preventDefault()
+        this.state.address += ("-" + this.state.pincode)
 
         const userObject = {
             hospital_id: this.state.hospital_id,
@@ -119,6 +124,11 @@ export default class HospitalRegister extends Component{
                         <Form.Group>
                             <Form.Label>Address:</Form.Label>
                             <Form.Control required type="text" placeholder="Enter Hospital Address" value={this.state.address} onChange={this.onChangeAddress.bind(this)}  />
+                        </Form.Group>  
+
+                        <Form.Group>
+                            <Form.Label>Pincode:</Form.Label>
+                            <Form.Control required type="number" placeholder="Enter Pincode" value={this.state.pincode} onChange={this.onChangePincode.bind(this)} min="100000" max="999999"/>
                         </Form.Group>  
 
                         <Form.Group>

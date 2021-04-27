@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import {
     Form,
     Button,
@@ -314,6 +313,10 @@ class BookAppointment extends Component{
     }
 
     onSchedule(e){
+        if(this.state.startDate === '' || this.state.doctor_id === ''){
+            toast.error('Enter start date or doctor_id')
+            return;
+        }
         const userObject = {
             doctor_id: this.state.doctor_id,
             slot: this.state.startDate,
@@ -409,7 +412,7 @@ class BookAppointment extends Component{
                     <h1>Book an appointment.</h1><hr/>
                     <Form.Group>
                         <Form.Label>Doctor ID</Form.Label>
-                        <Form.Control as="select" required type="number" placeholder="Enter Doctor ID" onChange={this.onChangeDoctorId.bind(this)} >
+                        <Form.Control as="select" required type="number" placeholder="Enter Doctor ID" onChange={this.onChangeDoctorId.bind(this)}>
                             <option disabled selected value> -- select an option -- </option>
                             {info}
                         </Form.Control>

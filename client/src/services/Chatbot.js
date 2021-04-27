@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import {
-    Container, Jumbotron, Form, Button
+    Container, Jumbotron, Form
 } from 'react-bootstrap'
 
 export default class Chatbot extends Component{
