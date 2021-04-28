@@ -6,6 +6,7 @@ import {
     Jumbotron,
     Container,
 } from 'react-bootstrap';
+import { relativeTimeRounding } from 'moment';
 
 
 class AgePie extends Component {
@@ -366,11 +367,44 @@ class CheckupPie extends Component {
     }
 }
 
-
+class AllCharts extends Component {
+    render(){
+        const outerouter = {
+            width:"75%",
+            margin: "0px auto"
+        }
+        const outer = {
+            display:'flex',
+            flexWrap: 'wrap',
+        }
+        return(
+            <div style={outerouter}>
+                <Jumbotron>
+                    <div style={outer}>
+                        <div>
+                            <AgePie/>
+                        </div>
+                        <div>
+                            <BmiPie/>
+                        </div>
+                        <div>
+                            <CheckupPie/>
+                        </div>
+                        <div>
+                            <BedsBar/>
+                        </div>
+                    </div>
+                    
+                </Jumbotron>
+            </div>
+        )
+    }
+}
 
 export {
     AgePie,
     BmiPie,
     BedsBar,
     CheckupPie,
+    AllCharts,
 };
