@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Chart from 'react-apexcharts'
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+    Jumbotron,
+    Container,
+} from 'react-bootstrap';
 
 
 class AgePie extends Component {
@@ -76,8 +80,12 @@ class AgePie extends Component {
         };
         return (
         <div style={divStyle}>
-            <Chart options={this.state.options} series={this.state.series} type="donut" width="500" />
-        </div>
+            <Container>
+                <Jumbotron>
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="500" />
+                </Jumbotron>
+            </Container>
+            </div>
         );
     }
 }
@@ -159,7 +167,11 @@ class BmiPie extends Component {
         };
         return (
         <div style={divStyle}>
-            <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
+            <Container>
+                <Jumbotron>
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
+                </Jumbotron>
+            </Container>
         </div>
         );
     }
@@ -246,12 +258,17 @@ class BedsBar extends Component {
             <div className="app">
             <div className="row">
                 <div className="mixed-chart">
-                <Chart
-                    options={this.state.options}
-                    series={this.state.series}
-                    type="bar"
-                    width="500"
-                />
+                
+                <Container>
+                    <Jumbotron>
+                    <Chart
+                        options={this.state.options}
+                        series={this.state.series}
+                        type="bar"
+                        width="500"
+                    />
+                    </Jumbotron>
+                </Container>
                 </div>
             </div>
             </div>
@@ -339,7 +356,11 @@ class CheckupPie extends Component {
         };
         return (
         <div style={divStyle}>
-            <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
+            <Container>
+                <Jumbotron>
+                    <Chart options={this.state.options} series={this.state.series} type="donut" width="600" />
+                </Jumbotron>
+            </Container>
         </div>
         );
     }

@@ -1,5 +1,10 @@
 import React, { Component} from "react";
 import Faq from "react-faq-component";
+import {
+    Jumbotron,
+    Container,
+} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const data = {
     title: "FAQ",
@@ -45,10 +50,10 @@ const data = {
 };
 
 const styles = {
-    // bgColor: 'white',
+    bgColor: '#e9ecef',
     titleTextColor: "Red",
-    rowTitleColor: "DarkBlue",
-    rowContentColor: 'Charcoal',
+    rowTitleColor: "#04355d",
+    rowContentColor: 'black',
     arrowColor: "red",
 };
 
@@ -66,12 +71,17 @@ export default class FaqPage extends Component{
             padding: '0px 20px',
         };
         return (
-            <div style={divStyle}>
-            <Faq
-                data={data}
-                styles={styles}
-                config={config}
-            />
+            <div>
+            <Container>
+                <Jumbotron>
+                    <Faq
+                    data={data}
+                    styles={styles}
+                    config={config}
+                    />
+                </Jumbotron>
+            </Container>
+            
             </div>
         )
     }
