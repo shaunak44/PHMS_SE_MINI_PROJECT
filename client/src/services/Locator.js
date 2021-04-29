@@ -98,6 +98,7 @@ class HospitalLocator extends Component{
             <Container>
             <Container>
                 <Jumbotron>
+                    <h1>Locate Hospital</h1><hr></hr>
                     <Form.Group>
                         <Form.Label>Select Pincode</Form.Label>
                         <Form.Control as="select" required type="number" placeholder="Enter Pincode" onChange={this.onChangePincode.bind(this)}>
@@ -203,6 +204,7 @@ class PharmacyLocator extends Component{
             <Container>
             <Container>
                 <Jumbotron>
+                    <h1>Locate Pharmacy</h1><hr></hr>
                     <Form.Group>
                         <Form.Label>Select Pincode</Form.Label>
                         <Form.Control as="select" required type="number" placeholder="Enter Pincode" onChange={this.onChangePincode.bind(this)}>

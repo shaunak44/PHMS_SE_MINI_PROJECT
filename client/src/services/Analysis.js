@@ -98,7 +98,7 @@ class BmiPie extends Component {
         super(props);
         this.state = {
             options: {
-                labels: ['Underweight (Below 18.5)', 'Healthy Weight (18.5 to 14.9)', 'Overweight(25.0 to 29.9)', 'Obese (30.0 and above)'],
+                labels: ['Underweight (Below 18.5)', 'Healthy Weight (18.5 to 24.9)', 'Overweight(25.0 to 29.9)', 'Obese (30.0 and above)'],
                 title: {
                     text: "BMI Analysis",
                     align: 'left',

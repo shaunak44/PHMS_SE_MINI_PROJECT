@@ -251,46 +251,50 @@ class ViewCitizenInfo extends Component{
 
     render(){
         return(
-            <Container>
-                <h2>Profile Highlights</h2>
-                <hr></hr>
-                <CardDeck>
-                    <Card    bg='warning' text='dark' style={{ width: '18rem' }} className="mb-2">
-                        <Card.Header>Name</Card.Header>
-                        <Card.Body>
-                        <Card.Title> {this.state.citizenInfo.name} </Card.Title>
-                        </Card.Body>
-                    </Card>
+            
+                <Container>
+                    <Jumbotron>
+                    <h2>Profile Highlights</h2>
+                    <hr></hr>
+                    <CardDeck>
+                        <Card    bg='warning' text='dark' style={{ width: '18rem' }} className="mb-2">
+                            <Card.Header>Name</Card.Header>
+                            <Card.Body>
+                            <Card.Title> {this.state.citizenInfo.name} </Card.Title>
+                            </Card.Body>
+                        </Card>
 
-                    <Card    bg='secondary' text='light' style={{ width: '18rem' }} className="mb-2">
-                        <Card.Header>Age</Card.Header>
-                        <Card.Body>
-                        <Card.Title> {this.state.citizenInfo.age} yrs</Card.Title>
-                        </Card.Body>
-                    </Card>
+                        <Card    bg='secondary' text='light' style={{ width: '18rem' }} className="mb-2">
+                            <Card.Header>Age</Card.Header>
+                            <Card.Body>
+                            <Card.Title> {this.state.citizenInfo.age} yrs</Card.Title>
+                            </Card.Body>
+                        </Card>
 
-                    <Card    bg='success' text='light' style={{ width: '18rem' }} className="mb-2">
-                        <Card.Header>Height</Card.Header>
-                        <Card.Body>
-                        <Card.Title> {this.state.citizenInfo.height} cm </Card.Title>
-                        </Card.Body>
-                    </Card>
+                        <Card    bg='success' text='light' style={{ width: '18rem' }} className="mb-2">
+                            <Card.Header>Height</Card.Header>
+                            <Card.Body>
+                            <Card.Title> {this.state.citizenInfo.height} cm </Card.Title>
+                            </Card.Body>
+                        </Card>
 
-                    <Card    bg='info' text='light' style={{ width: '18rem' }} className="mb-2">
-                        <Card.Header>BMI</Card.Header>
-                        <Card.Body>
-                        <Card.Title> {(this.state.citizenInfo.weight / (this.state.citizenInfo.height/100) ** 2).toFixed(2)} </Card.Title>
-                        </Card.Body>
-                    </Card>
+                        <Card    bg='info' text='light' style={{ width: '18rem' }} className="mb-2">
+                            <Card.Header>BMI</Card.Header>
+                            <Card.Body>
+                            <Card.Title> {(this.state.citizenInfo.weight / (this.state.citizenInfo.height/100) ** 2).toFixed(2)} </Card.Title>
+                            </Card.Body>
+                        </Card>
 
-                    <Card    bg='danger' text='light' style={{ width: '18rem' }} className="mb-2">
-                        <Card.Header>Comorbidity</Card.Header>
-                        <Card.Body>
-                        <Card.Title> {this.state.citizenInfo.comorbidity} </Card.Title>
-                        </Card.Body>
-                    </Card>
-                </CardDeck>
-            </Container>
+                        <Card    bg='danger' text='light' style={{ width: '18rem' }} className="mb-2">
+                            <Card.Header>Comorbidity</Card.Header>
+                            <Card.Body>
+                            <Card.Title> {this.state.citizenInfo.comorbidity} </Card.Title>
+                            </Card.Body>
+                        </Card>
+                    </CardDeck>
+                    </Jumbotron>
+                </Container>
+                
         )
     }
 }

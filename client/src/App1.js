@@ -133,8 +133,8 @@ function App1() {
             <Nav.Link as={Link} to="/agepie">Analysis</Nav.Link>
 
             <NavDropdown title="Locator" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/Hospitallocator" >Hospital Locator</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/Pharmacylocator" >Pharmacy Locator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/hospitallocator" >Hospital Locator</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/pharmacylocator" >Pharmacy Locator</NavDropdown.Item>
             </NavDropdown>
 
           </Nav>
@@ -206,7 +206,7 @@ function App1() {
           <Route exact path="/registerpharmacy">
             <PharmacyRegister />
           </Route>
-          <Route exact path="/registeoperator">
+          <Route exact path="/registeroperator">
             <OperatorRegister />
           </Route>
           <Route exact path="/registerdoctor">
