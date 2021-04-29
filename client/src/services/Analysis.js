@@ -6,7 +6,7 @@ import {
     Jumbotron,
     Container,
 } from 'react-bootstrap';
-import { relativeTimeRounding } from 'moment';
+
 
 
 class AgePie extends Component {

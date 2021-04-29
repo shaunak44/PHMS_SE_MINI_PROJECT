@@ -66,10 +66,6 @@ const config = {
 
 export default class FaqPage extends Component{
     render() {
-        const divStyle = {
-            margin: '20px auto',
-            padding: '0px 20px',
-        };
         return (
             <div>
             <Container>

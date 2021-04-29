@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Redirect,} from 'react-router-dom';
+
 import {
     Form,
     Jumbotron,
@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 class HospitalLocator extends Component{

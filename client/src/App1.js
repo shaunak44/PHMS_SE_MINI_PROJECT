@@ -15,7 +15,6 @@ import {
   Container,
   Jumbotron,
 } from 'react-bootstrap';
-import Chatbot from './services/Chatbot'
 import SignUp from './services/signUp'
 import Login from './services/Login'
 import {DoctorLogin, DoctorDashboard} from './services/LoginDoctor'
@@ -94,40 +93,6 @@ var chats = [
 
 function App1() {
 
-  const [show, setShow] = useState(false);  
-  
-  function handleClose(){
-    setShow(false);
-  }
-
-  function handleShow(){
-    setShow(true);
-  }
-  
-  function talk(event){
-    var know = {
-        "hello": "Hello I Am A Simple Chatbot. I Am Here To Help You!",
-        "hi": "Hii, Tell me something about yourself ??",
-        "how are you?": "I am great !!",
-        "life is like hell": "Are you in TY COMP at COEP ?",
-        "tell me a random fact": "Life would have been much easy, if there was no Abhijit Sir.",
-        "bye": "Bye ! Have A Great Day !!"
-    }
-    console.log(event);
-    if(event.keyCode === 13){
-        
-        var user = document.getElementById("userbox").value
-        document.getElementById("userbox").value = ""
-        document.getElementById("chatLog").innerHTML += user + "<br>"
-        
-        if(user in know){
-            document.getElementById("chatLog").innerHTML += "&nbsp;" + know[user] + "<br><br>"
-        }
-        else{
-            document.getElementById("chatLog").innerHTML += "&nbsp;" + "Sorry I Can't Understand. <br><br>"
-        }
-    }
-  };
   return (
     <Router>
       <div>
