@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
     Container,
     Button,
+    Jumbotron,
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -35,16 +36,20 @@ export default class CitizenProfile extends Component{
     render(){
         return(
             <Container>
-                <h2>
-                    Welcome User With aadhaar {this.state.usersCollection.aadhaar_id}
-                </h2>
-                <hr></hr>
+                
                 <Container>
+                    <Jumbotron>
+                    <h2>
+                        Welcome User With aadhaar {this.state.usersCollection.aadhaar_id}
+                    </h2>
+                    <hr></hr>
                     <Button block href="/citizen/createprofile" size='lg' variant='primary'>Create Profile</Button>{'  '}
                     <Button block href="/citizen/viewprofile" size='lg' variant='secondary'>View Profile</Button>{'  '}
                     <Button block href="/citizen/bookappointment" size='lg' variant='success'>Book Appointment</Button>{'  '}
                     <Button block href="/citizen/checkappointment" size='lg' variant='info'>Check Appointments</Button>{'  '}
                     <Button block href="/logout" size='lg' variant='danger'>Logout</Button>{'  '}
+                
+                    </Jumbotron>
                 </Container>
             </Container> 
         )

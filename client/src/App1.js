@@ -206,7 +206,7 @@ function App1() {
           <Route exact path="/registerpharmacy">
             <PharmacyRegister />
           </Route>
-          <Route exact path="/registeoperator">
+          <Route exact path="/registeroperator">
             <OperatorRegister />
           </Route>
           <Route exact path="/registerdoctor">
