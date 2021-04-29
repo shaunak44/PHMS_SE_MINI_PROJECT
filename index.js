@@ -6,7 +6,6 @@ var cors = require('cors');
 require('dotenv').config()
 
 // IMPORT MODELS
-const user = require("./routes/user"); //new addition
 const citizen = require("./routes/citizen"); //new addition
 const hospital = require("./routes/hospital"); //new addition
 const pharmacy = require("./routes/pharmacy"); //new addition
@@ -39,7 +38,6 @@ if (process.env.NODE_ENV === 'production') {
 
 }
 
-app.use("/user", user);
 app.use("/citizen", citizen);
 app.use("/hospital", hospital);
 app.use("/pharmacy", pharmacy);
